@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--工作空间，定位到dao的接口-->
+<mapper namespace="jdlg.musicproject.dao.StudentDao">
+    <insert id="insertStudent">
+        insert into student(student_id,student_name) values (${student_id},'${student_name}')
+    </insert>
+    <insert id="insertStuAdmin">
+        insert into stu_admin(admin_stu_id,stu_password) values (${admin_stu_id},'${student_pwd}')
+    </insert>
+    <!--<select id="selectStudentPwd" resultType="java.lang.String">
+        select stu_admin.stu_password s_pwd FROM student,stu_admin where  stu_admin.admin_stu_id = student.student_id AND student.student_name = '${s_name}'
+    </select>-->
+    <select id="selectStuPwdById" resultType="jdlg.musicproject.entries.student.StudentNamePwd">
+       select stu_admin.stu_password s_pwd, student.student_name s_name from student,stu_admin
+       where stu_admin.admin_stu_id = student.student_id and student_id = ${stu_id}
+    </select>
+    <select id="usedStudent" resultType="java.lang.Integer">
+        select used from student where student_id = ${s_id}
+    </select>
+    <select id="selectAllCourses" resultType="jdlg.musicproject.entries.common.Courses">
+        select course.course_name courseName,course.course_id courseId from course,stu_course
+        where
+        course.course_id = stu_course.stu_course_id and stu_course.stu_id = ${stu_id}
+    </select>
+    <insert id="insertStuCourse">
+        insert into stu_course (stu_id,stu_course_id) values (${stuId},${courseId})
+    </insert>
+    <insert id="insertGrade">
+        insert into stu_grade (g_stu_id,g_course_id,g_times) values (${stuId},${courseId},${times})
+    </insert>
+    <select id="selectGrade" resultType="jdlg.musicproject.entries.student.StudentGrade">
+        select g_stu_id stuId,g_course_id courseId,g_times times,grade from stu_grade where g_stu_id = ${sId}
+    </select>
+    <update id="updateGrade">
+        update stu_grade set grade = ${grade}
+        where
+        g_stu_id = ${stuId} and g_course_id = ${courseId} and g_times = ${times}
+    </update>
+    <insert id="insertAnswer">
+        insert into stu_q_answer (question_id,stu_id,stu_answer) values (${questionId},${studentId},'${stuAnswer}')
+    </insert>
+    <select id="selectAnswer" resultType="jdlg.musicproject.entries.student.StudentQAnswer">
+        select question_id questionId,stu_id studentId,stu_answer stuAnswer from stu_q_answer
+        where
+        question_id = ${qId} and stu_id = ${sId}
+    </select>
+</mapper>

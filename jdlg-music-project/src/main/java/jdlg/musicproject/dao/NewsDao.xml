@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--工作空间，定位到dao的接口-->
+<mapper namespace="jdlg.musicproject.dao.NewsDao">
+
+    <!--Map映射封装实体类字段-->
+    <resultMap id="news" type="jdlg.musicproject.entries.common.News" >
+        <id property="id" column="id" />
+        <result property="newTitle" column="new_title" />
+        <result property="newContext" column="new_context"/>
+        <result property="newImgUrl" column="new_img_url"/>
+        <result property="newMark" column="new_mark" />
+        <result property="upDate" column="up_date" />
+    </resultMap>
+
+    <!--查询所有新闻-->
+    <select id="selectAllNews" resultMap="news">
+        select new_title,
+               # new_context,
+               REPLACE(REPLACE(new_context,' ','&amp;nbsp;'),'\t','&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;') new_context,
+               new_img_url, new_mark,LEFT(up_date,19) up_date
+         from news order by up_date desc
+    </select>
+
+    <!--根据标记查找新闻-->
+    <select id="selectNewsByMark" resultMap="news">
+        select new_title,
+               # new_context,
+               REPLACE(REPLACE(new_context,' ','&amp;nbsp;'),'\t','&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;') new_context,
+               new_img_url, new_mark, LEFT(up_date,19) up_date
+         from news where new_mark = ${newMark} order by up_date desc
+    </select>
+
+    <!--根据新闻标题查询新闻-->
+    <select id="selectNewByTitle" resultMap="news">
+        select new_title,
+               # new_context,
+               REPLACE(REPLACE(new_context,' ','&amp;nbsp;'),'\t','&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;') new_context,
+               new_img_url, new_mark, LEFT(up_date,19) up_date
+         from news where new_title like '${newTitle}'
+    </select>
+
+    <!--添加新闻-->
+    <insert id="addNew" parameterType="jdlg.musicproject.entries.common.News">
+        insert into news(new_title, new_context, new_img_url, new_mark, up_date)
+        values ('${newTitle}','${newContext}','${newImgUrl}',${newMark}, now())
+    </insert>
+
+    <!--根据新闻id删除新闻-->
+    <delete id="deleteNew">
+        delete from news
+        where new_title = '${newTitle}'
+    </delete>
+
+    <!--更新新闻-->
+    <update id="updateNew" parameterType="jdlg.musicproject.entries.common.News">
+        update news
+        set new_title = '${newTitle}',
+        new_context = '${newContext}',
+        new_img_url = '${newImgUrl}',
+        new_mark = ${newMark}
+        where new_title = '${oldTitle}'
+    </update>
+
+</mapper>

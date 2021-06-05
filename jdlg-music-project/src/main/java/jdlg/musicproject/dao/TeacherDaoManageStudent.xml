@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--工作空间，定位到dao的接口-->
+<mapper namespace="jdlg.musicproject.dao.TeacherDaoManageStudent">
+    <select id="selectStudentsByName" resultType="jdlg.musicproject.entries.student.Student">
+        select student_id, student_name, used
+        from student
+        where student_name like #{sName}
+    </select>
+    <!--    <update id="updateStudent">-->
+    <!--        update student set student_name = #{student_name}-->
+    <!--    </update>-->
+    <update id="resetPasswordBycId">
+        UPDATE stu_admin
+        SET stu_password=#{password}
+        WHERE admin_stu_id in (SELECT stu_id from stu_course WHERE stu_course_id = #{cId})
+    </update>
+
+    <update id="resetPasswordAllStudent">
+        UPDATE stu_admin
+        SET stu_password=#{password}
+        WHERE admin_stu_id in (SELECT student.student_id FROM student)
+    </update>
+
+    <delete id="deleteStudentBysId">
+        delete from student where student_id = #{sId}
+    </delete>
+
+    <update id="resetPasswordBysId">
+        update stu_admin set stu_password = #{password} where admin_stu_id = #{sId}
+    </update>
+
+</mapper>

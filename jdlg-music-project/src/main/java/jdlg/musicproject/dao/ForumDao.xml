@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--工作空间，定位到dao的接口-->
+<mapper namespace="jdlg.musicproject.dao.ForumDao">
+    <insert id="insertForumQuestion">
+        insert into forum_question
+            (que_id, course_id, name, context, up_date)
+        values (#{queId}, #{courseId}, #{name}, #{context}, now())
+    </insert>
+    <insert id="insertForumAnswer">
+        insert into forum_answer
+            (que_id, name, answer, up_date)
+        VALUES (#{queId}, #{name}, #{answer}, now())
+    </insert>
+    <select id="selectForumIdByCId" resultType="java.lang.Integer">
+        select que_id
+        from forum_question
+        where course_id = #{c_id}
+        <if test="find != null">
+            and context like #{find}
+        </if>
+        order by up_date desc
+
+    </select>
+    <select id="selectForumQuestionByCId" resultMap="Question">
+        select q.que_id qId,
+        q.course_id cId,
+        q.`name` qName,
+        q.context,
+        LEFT(q.up_date,19) qDate,
+        # q.up_date qDate,
+        a.id aId,
+        a.que_id aQId,
+        a.`name` aName,
+        # a.answer,
+        <choose>
+            <when test="HomePageFlag != null">
+                LEFT(a.answer,50) answer,
+                a.up_date aDate
+                from
+                forum_answer a
+                RIGHT JOIN
+                forum_question q
+                ON q.que_id = a.que_id
+                where q.course_id = #{c_id}
+                and q.que_id =#{q_id}
+                # ORDER BY q.up_date desc
+                LIMIT 0,1
+            </when>
+            <otherwise>
+                # a.answer,
+                REPLACE(REPLACE(a.answer,' ','&amp;nbsp;'),'\t','&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;') answer,
+                a.up_date aDate
+                from forum_answer a
+                RIGHT JOIN forum_question q
+                ON q.que_id = a.que_id
+                where q.course_id = #{c_id}
+                and q.que_id =#{q_id}
+                ORDER BY q.up_date desc
+                limit #{index_answer},#{answer_page_size}
+            </otherwise>
+        </choose>
+
+    </select>
+    <resultMap id="Question" type="jdlg.musicproject.entries.common.ForumQuestion">
+        <result column="qId" property="queId"/>
+        <result column="cId" property="courseId"/>
+        <result column="qName" property="name"/>
+        <result column="context" property="context"/>
+        <result column="qDate" property="upDate"/>
+        <collection property="forumAnswer" ofType="jdlg.musicproject.entries.common.ForumAnswer">
+            <result column="aId" property="id"/>
+            <result column="aQId" property="queId"/>
+            <result column="aName" property="name"/>
+            <result column="answer" property="answer"/>
+            <result column="aDate" property="upDate"/>
+        </collection>
+    </resultMap>
+
+    <delete id="deleteForumByQuestionId">
+        delete
+        from forum_question
+        where que_id = #{que_id}
+    </delete>
+    <select id="selectForumCommentCountByQid" resultType="java.lang.Integer">
+        select COUNT(*) from forum_answer where que_id = #{queId}
+    </select>
+</mapper>

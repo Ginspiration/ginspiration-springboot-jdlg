@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--将所有静态文件的调用交给spring框架-->
+    <!--<mvc:resources mapping="/static/**" location="/static/"/>-->
+
+    <!--将（静态资源）转发给服务器，spring框架转发给tomcat-->
+   <!-- <mvc:default-servlet-handler/>-->
+
+    <!--<mvc:annotation-driven />相当于注册了DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter两个bean-->
+    <!--<mvc:annotation-driven/>-->
+
+<!--    &lt;!&ndash;扫描spring中service层的（servlet）的注释内容&ndash;&gt;-->
+<!--    <context:component-scan base-package="jdlg.musicproject.controller"/>-->
+    <!--配置视图路径-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--拦截器配置-->
+    <mvc:interceptors>
+        <!--教师请求拦截-->
+        <mvc:interceptor>
+            <!--拦截请求地址-->
+            <mvc:mapping path="/doTeacher/*"/>
+            <!--拦截器类所在类-->
+            <bean class="jdlg.musicproject.interceptor.login.TeacherInterceptor"/>
+        </mvc:interceptor>
+        <!--学生请求拦截-->
+        <mvc:interceptor>
+            <mvc:mapping path="/doStudent/*"/>
+            <bean class="jdlg.musicproject.interceptor.login.StudentInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

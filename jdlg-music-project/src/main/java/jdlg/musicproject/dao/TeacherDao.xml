@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--工作空间，定位到dao的接口-->
+<mapper namespace="jdlg.musicproject.dao.TeacherDao">
+    <select id="selectTchNameById" resultType="jdlg.musicproject.entries.teacher.TeacherNamePwd">
+        select tch_admin.tch_password t_pwd,teacher.teacher_name t_name FROM teacher,tch_admin where  tch_admin.admin_tch_id = teacher.teacher_id AND teacher.teacher_id = '${t_id}'
+    </select>
+    <select id="selectTeacherBytId" resultType="java.lang.String">
+        select teacher_name from teacher where teacher_id = #{t_id}
+    </select>
+    <insert id="insertTeacher">
+        insert into teacher (teacher_id,teacher_name) values (${teacher_id},'${teacher_name}')
+    </insert>
+    <insert id="insertTchPwdName">
+    insert into tch_admin (admin_tch_id,tch_password) values (${admin_tch_id},'${tch_password}')
+    </insert>
+    <update id="disableStudent">
+        UPDATE student SET used = 1 WHERE student_id = ${s_id}
+    </update>
+    <update id="ableStudent">
+        UPDATE student SET used = 0 WHERE student_id = ${s_id}
+    </update>
+    <select id="selectAllStu" resultType="jdlg.musicproject.entries.student.Student">
+        select * from student
+    </select>
+    <select id="webMessage" resultType="jdlg.musicproject.entries.web.WebManage">
+        select web_used webUsed,registered registered from admin_web
+    </select>
+    <update id="webSubmit">
+        update admin_web set web_used = ${webUsed},registered = ${registered} where id = 1
+    </update>
+    <insert id="insertCourse">
+        insert into course(course_id,course_name) values (${courseId},'${courseName}')
+    </insert>
+    <insert id="insertTchCourse">
+        insert into tch_course (tch_id,tch_course_id) values (${tchId},${courseId})
+    </insert>
+    <select id="selectCourses" resultType="jdlg.musicproject.entries.common.Courses">
+        select course_id courseId,course_name courseName from course where course_id = ${course_id}
+    </select>
+    <select id="selectAllCourses" resultType="jdlg.musicproject.entries.common.Courses">
+        SELECT course.course_id courseId,course.course_name courseName FROM course,tch_course
+        WHERE
+        course.course_id = tch_course.tch_course_id AND tch_course.tch_id = ${course_id}
+    </select>
+    <select id="selectWorkTimes" resultType="java.lang.Integer">
+        SELECT times FROM homework_explain WHERE work_course_id = ${course_id}
+    </select>
+    <insert id="insertQuestions">
+    insert into question_bank (bank_course_id,context,answer,times) values (${courseId},'${context}','${answer}',${times})
+    </insert>
+    <select id="selectQuestions" resultType="jdlg.musicproject.entries.common.QuestionBank">
+        select id qId, bank_course_id courseId,context,answer,times from question_bank where bank_course_id = ${course_id} and times = ${times}
+    </select>
+    <insert id="insertExplain">
+    insert into homework_explain (work_course_id,times,explain_context,total_points) values (${courseId},${times},'${explainContext}',${totalPoints})
+    </insert>
+    <select id="selectExplain" resultType="jdlg.musicproject.entries.common.WorkExplain">
+        select work_course_id courseId,times,explain_context explainContext,total_points totalPoints from homework_explain where times = ${times} and work_course_id = ${course_id}
+    </select>
+    <select id="selectAllExplain" resultType="jdlg.musicproject.entries.common.WorkExplain">
+        select work_course_id courseId,times,explain_context explainContext,total_points totalPoints from homework_explain where work_course_id = ${c_id}
+    </select>
+    <select id="selectStuByCourse" resultType="jdlg.musicproject.entries.student.Student">
+        select student.student_id,student.student_name,used from student,stu_course
+        where
+        student.student_id = stu_course.stu_id and stu_course.stu_course_id = ${c_id}
+    </select>
+    <select id="selectGrade" resultType="jdlg.musicproject.entries.student.StudentCompletion">
+        select student.student_id sId,student.student_name sName,stu_grade.grade
+        from
+        stu_grade
+        join
+        student
+        on
+        stu_grade.g_stu_id = student.student_id
+        where
+        stu_grade.g_course_id =  ${c_id}
+        and
+        stu_grade.g_times = ${times}
+    </select>
+    <delete id="deleteQuestion">
+        delete from question_bank where id = ${q_id}
+    </delete>
+    <delete id="deleteExplain">
+        delete from homework_explain
+        where
+        work_course_id = ${c_id} and times = ${times}
+    </delete>
+    <select id="selectTotalGrade" resultType="jdlg.musicproject.entries.student.StudentCompletion">
+        select student.student_id sId,student.student_name sName,sum(stu_grade.grade) grade
+        from
+        student
+        join
+        stu_grade
+        on
+        student.student_id = stu_grade.g_stu_id
+        where
+        g_course_id = ${c_id}
+        group by student.student_id
+        order by grade desc
+    </select>
+    <select id="selectTotalTimes" resultType="java.lang.Integer">
+        SELECT COUNT(*) from homework_explain WHERE work_course_id = ${c_id}
+    </select>
+    <select id="selectTidBycId" resultType="java.lang.Integer">
+        select tch_id from tch_course where tch_course_id = ${c_id}
+    </select>
+</mapper>
