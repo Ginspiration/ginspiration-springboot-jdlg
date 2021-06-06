@@ -356,7 +356,7 @@
         setTransition() {
             const styleElement = document.createElement('style');
             document.head.appendChild(styleElement);
-            const styleRule = `.lb-item {transition: left ${this.speed}ms ease-in-out}`
+            const styleRule = `.lb-item {transition: left ${param['this'].speed}ms ease-in-out}`
             styleElement.sheet.insertRule(styleRule, 0);
         }
 
