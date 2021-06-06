@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <script src="<%=basePath%>static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="<%=basePath%>static/plugins/base64/base64.js"></script>
 
 <script>
 
@@ -104,8 +105,22 @@
                                 <%--展示标题--%>
                                     <%--对标记新闻进行特别注释--%>
                                     <div style="float: left;margin-right: 10px">&nbsp;<c:if test="${news.newMark == 1}">*</c:if></div>
-                                <a href="newsDetail?newTitle=${news.newTitle}" >${news.newTitle} </a>
+                                <button class="btn btn-link" onclick="convert${status.count}()">${news.newTitle} </button>
+                                <script>
 
+                                    //标题转化为unicode传输
+                                    function convert${status.count}() {
+                                        let str = "${news.newTitle}";
+
+                                        var base = new Base64();
+                                        let a = base.encode(str)
+
+                                        console.log(a)
+
+                                        window.location.href = "newsDetail?newTitle=" + a;
+                                    }
+
+                                </script>
                                 <%--展示发布时间--%>
                                 <span style="font-size: 10px;
                                 color:#8a8a8a;

@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -313,6 +314,15 @@ public class DoNews {
                                    HttpSession session) {
         ModelAndView mv = new ModelAndView();
         request.setAttribute("Context", UtilTeacherWebURI.teacherViewNewsDetail.getUri());
+
+        //将前端转化的base64标题解码
+        if (newTitle != null) {
+            try {
+                newTitle = new String(Base64.getDecoder().decode(newTitle.replace(" ", "+")), "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
 
         //获取新闻对象
         List<News> news = null;

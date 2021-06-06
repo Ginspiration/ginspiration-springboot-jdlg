@@ -8,6 +8,7 @@ import jdlg.musicproject.service.StudentService;
 import jdlg.musicproject.service.TeacherService;
 import jdlg.musicproject.util.UtilStudentWebURI;
 import jdlg.musicproject.util.UtilTeacherWebURI;
+import jdlg.musicproject.util.Unicode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -134,6 +137,15 @@ public class UseNews {
                                    HttpSession session) {
         ModelAndView mv = new ModelAndView();
         request.setAttribute("Context", UtilStudentWebURI.viewNewsDetail.getUri());
+
+        //将前端转化的base64标题解码
+        if (newTitle != null) {
+            try {
+                newTitle = new String(Base64.getDecoder().decode(newTitle.replace(" ", "+")), "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
 
         //获取新闻对象
         List<News> news = null;
