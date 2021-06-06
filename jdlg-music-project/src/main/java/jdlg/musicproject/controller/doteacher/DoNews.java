@@ -109,11 +109,15 @@ public class DoNews {
         //上传文件地址并保存realPath
         //System.out.println("上传文件保存地址：" + filePath);
 
+        //获取当前时间戳
+        long l = System.currentTimeMillis();
+
         //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
+        //同时将文件名重命名为含时间戳的位
         for (int i = 0; i < file.length; i++) {
             MultipartFile file1 = file[i];
             try {
-                File file2 = new File(filePath + "/" + file[i].getOriginalFilename());
+                File file2 = new File(filePath + "/" + l + "_" +i);
                 file1.transferTo(file2);
             } catch (IOException e) {
                 return 1001; //返回1001：文件上传失败
@@ -136,14 +140,17 @@ public class DoNews {
             }
         }
         news.setNewTitle(title);
+
+
+
         //对于文件路径，需循环保存，且为webapp的相对地址realPath。分隔符为&*&
         String realPath = "static/newsImg/";
         String url = "";
         for (int i = 0; i < file.length; i++) {
             if (i < file.length - 1) {
-                url += realPath + file[i].getOriginalFilename() + "&*&";
+                url += realPath + l + "_" +i + "&*&";
             } else
-                url += realPath + file[i].getOriginalFilename();
+                url += realPath + l + "_" +i;
             //System.out.println(url);
         }
         //文件路径转义
