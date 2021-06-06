@@ -25,11 +25,18 @@ public class UseIndex {
      * @param request
      * @return
      */
-    @RequestMapping("index")
+    @RequestMapping({"/","/index"})
     public ModelAndView index(HttpSession session,HttpServletRequest request){
-        //获取标记新闻
-        List<News> newsList = newsService.selectNewsByMark(1);
 
+        //添加多线程防止出现线程安全问题
+        if (session.getAttribute("synNews") == null) {
+            session.setAttribute("synNews", new Object());
+        }
+        //获取标记新闻
+        List<News> newsList = null;
+        synchronized (session.getAttribute("synNews")) {
+            newsList = newsService.selectNewsByMark(1);
+        }
         //将数据传给前端
         session.setAttribute("news",newsList);
         session.setAttribute("indexMark",true);
@@ -39,20 +46,20 @@ public class UseIndex {
         return mv;
     }
 
-    /*新闻详情跳转*/
-    @RequestMapping("/newsDetail")
-    public ModelAndView newsDetail(String newTitle,HttpServletRequest request,
-                                   HttpSession session){
-        ModelAndView mv = new ModelAndView();
-        //获取新闻对象
-        List<News> news = newsService.selectNewByTitle(newTitle);
-        News news1 = news.get(0);
-
-        session.removeAttribute("news");
-        session.setAttribute("news",news1);
-
-        mv.setViewName("news/viewNewsDetail");
-        return mv;
-    }
+//    /*新闻详情跳转*/
+//    @RequestMapping("/newsDetail")
+//    public ModelAndView newsDetail(String newTitle,HttpServletRequest request,
+//                                   HttpSession session){
+//        ModelAndView mv = new ModelAndView();
+//        //获取新闻对象
+//        List<News> news = newsService.selectNewByTitle(newTitle);
+//        News news1 = news.get(0);
+//
+//        session.removeAttribute("news");
+//        session.setAttribute("news",news1);
+//
+//        mv.setViewName("news/viewNewsDetail");
+//        return mv;
+//    }
 
 }

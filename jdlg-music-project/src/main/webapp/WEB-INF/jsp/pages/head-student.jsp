@@ -120,7 +120,7 @@
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
                 <a onclick="x()" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="<%=basePath%>static/img/avatar5.png" class="user-image" alt="User Image">
+                    <%--<img src="<%=basePath%>static/img/avatar5.png" class="user-image" alt="User Image">--%>
                     <span class="hidden-xs"><%=userName%></span>
                 </a>
                 <%--                <ul class="dropdown-menu">--%>

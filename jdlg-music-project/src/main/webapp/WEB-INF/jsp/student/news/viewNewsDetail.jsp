@@ -231,8 +231,8 @@
     <!-- 内容头部 -->
     <section class="content-header">
         <h1>
-            ${sessionScope.tName}
-            <small>(教师)</small>
+            ${sessionScope.sName}
+            <small>(学生)</small>
         </h1>
     </section>
 
@@ -356,7 +356,7 @@
         setTransition() {
             const styleElement = document.createElement('style');
             document.head.appendChild(styleElement);
-            const styleRule = `.lb-item {transition: left ${this.speed}ms ease-in-out}`
+            const styleRule = `.lb-item {transition: left ${param['this'].speed}ms ease-in-out}`
             styleElement.sheet.insertRule(styleRule, 0);
         }
 
