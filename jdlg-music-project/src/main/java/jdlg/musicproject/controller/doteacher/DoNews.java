@@ -111,13 +111,19 @@ public class DoNews {
 
         //获取当前时间戳
         long l = System.currentTimeMillis();
+        //获取文件后缀
+        String backword[] = new String[file.length];
+        for(int i = 0; i < file.length; i++){
+            backword[i] = file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf('.'));
+        }
+
 
         //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
         //同时将文件名重命名为含时间戳的位
         for (int i = 0; i < file.length; i++) {
             MultipartFile file1 = file[i];
             try {
-                File file2 = new File(filePath + "/" + l + "_" +i);
+                File file2 = new File(filePath + "/" + l + "_" +i  + backword[i]);
                 file1.transferTo(file2);
             } catch (IOException e) {
                 return 1001; //返回1001：文件上传失败
@@ -148,9 +154,9 @@ public class DoNews {
         String url = "";
         for (int i = 0; i < file.length; i++) {
             if (i < file.length - 1) {
-                url += realPath + l + "_" +i + "&*&";
+                url += realPath + l + "_" +i + backword[i] + "&*&";
             } else
-                url += realPath + l + "_" +i;
+                url += realPath + l + "_" +i + backword[i];
             //System.out.println(url);
         }
         //文件路径转义
