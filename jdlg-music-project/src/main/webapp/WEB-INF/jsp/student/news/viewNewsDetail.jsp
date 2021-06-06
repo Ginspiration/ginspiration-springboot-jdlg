@@ -231,8 +231,8 @@
     <!-- 内容头部 -->
     <section class="content-header">
         <h1>
-            ${sessionScope.tName}
-            <small>(教师)</small>
+            ${sessionScope.sName}
+            <small>(学生)</small>
         </h1>
     </section>
 

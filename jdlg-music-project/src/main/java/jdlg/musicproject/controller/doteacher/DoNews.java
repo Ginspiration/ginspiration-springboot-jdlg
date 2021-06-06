@@ -13,6 +13,7 @@ import jdlg.musicproject.service.TeacherService;
 import jdlg.musicproject.util.UtilTeacherWebURI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +67,7 @@ public class DoNews {
     @ResponseBody
     public ModelAndView addNewsPermit(@RequestParam("adminName") String name,
                                       @RequestParam("adminPassword") String password,
-                                      HttpServletRequest request) {
+                                      HttpServletRequest request, HttpSession session) {
         ModelAndView mv = new ModelAndView();
         if (name != null && password != null) {
             TeacherRegister register = adminService.registerPermit();
@@ -94,8 +95,9 @@ public class DoNews {
      */
     @ResponseBody
     @PostMapping("/addNews")
+    @Transactional
     public int addNews(@RequestParam("files") CommonsMultipartFile[] file,
-                       String title, String context, String marked, HttpServletRequest request) {
+                       String title, String context, String marked, HttpSession session, HttpServletRequest request) {
 
         /*文件上传*/
         //上传路径保存设置
@@ -122,7 +124,10 @@ public class DoNews {
         News news = new News();
         news.setNewContext(context);
         //存储标题前，需先查找是否有重复标题
-        List<News> getTitleList = newsService.selectAllNews();
+        List<News> getTitleList = null;
+        synchronized (session.getAttribute("synNews")){
+            getTitleList = newsService.selectAllNews();
+        }
         for (News news1 : getTitleList) {
             if (news1.getNewTitle().equals(title)) {
                 //System.out.println(news1.getNewTitle());
@@ -150,7 +155,9 @@ public class DoNews {
         else
             news.setNewMark(0);
         //System.out.println(news);
-        newsService.addNew(news);
+        synchronized (session.getAttribute("synNews")) {
+            newsService.addNew(news);
+        }
         return 1000;
     }
 
@@ -164,12 +171,17 @@ public class DoNews {
      */
     @ResponseBody
     @PostMapping("/addNewsNoFile")
-    public int addNewsNoFile(String title, String context, String marked, HttpServletRequest request) {
+    @Transactional
+    public int addNewsNoFile(String title, String context, String marked, HttpSession session) {
         /*对象存储信息*/
         News news = new News();
         news.setNewContext(context);
         //存储标题前，需先查找是否有重复标题
-        List<News> getTitleList = newsService.selectAllNews();
+        //List<News> getTitleList = newsService.selectAllNews();
+        List<News> getTitleList = null;
+        synchronized (session.getAttribute("synNews")){
+            getTitleList = newsService.selectAllNews();
+        }
         for (News news1 : getTitleList) {
             if (news1.getNewTitle().equals(title)) {
                 //System.out.println(news1.getNewTitle());
@@ -187,7 +199,9 @@ public class DoNews {
         else
             news.setNewMark(0);
         //System.out.println(news);
-        newsService.addNew(news);
+        synchronized (session.getAttribute("synNews")) {
+            newsService.addNew(news);
+        }
         return 1000;
     }
 
@@ -222,13 +236,21 @@ public class DoNews {
         List<News> newsList;
         if (mark == 0) {
             page = PageHelper.startPage(nowPage, pageSize);
-            newsList = newsService.selectNewsByMark(0);
+            synchronized (session.getAttribute("synNews")) {
+                newsList = newsService.selectNewsByMark(0);
+            }
         } else if (mark == 1) {
             page = PageHelper.startPage(nowPage, pageSize);
-            newsList = newsService.selectNewsByMark(1);
+            synchronized (session.getAttribute("synNews")) {
+                newsList = newsService.selectNewsByMark(1);
+            }
+            //newsList = newsService.selectNewsByMark(1);
         } else {
             page = PageHelper.startPage(nowPage, pageSize);
-            newsList = newsService.selectAllNews();
+            synchronized (session.getAttribute("synNews")) {
+                newsList = newsService.selectAllNews();
+            }
+            //newsList = newsService.selectAllNews();
         }
 
 
@@ -267,7 +289,10 @@ public class DoNews {
 
         String title = req.getParameter("title");
         //System.out.println(title);
-        List<News> newsList = newsService.selectNewByTitle(title);
+        List<News> newsList = null;
+        synchronized (session.getAttribute("synNews")) {
+            newsList = newsService.selectNewByTitle(title);
+        }
         //System.out.println(newsList);
 
         session.removeAttribute("mark");
@@ -291,7 +316,10 @@ public class DoNews {
         request.setAttribute("Context", UtilTeacherWebURI.teacherViewNewsDetail.getUri());
 
         //获取新闻对象
-        List<News> news = newsService.selectNewByTitle(newTitle);
+        List<News> news = null;
+        synchronized (session.getAttribute("synNews")){
+             news = newsService.selectNewByTitle(newTitle);
+        }
         News news1 = news.get(0);
 
         session.removeAttribute("news");
@@ -302,6 +330,7 @@ public class DoNews {
     }
 
     @GetMapping("/deleteNew")
+    @Transactional
     public ModelAndView deleteNew(String newTitle,
                                   int nowPage, int updatePage,
                                   HttpServletRequest request,
@@ -309,8 +338,9 @@ public class DoNews {
         //System.out.println("delete");
         //一页显示多少条数据
         int pageSize = 10;
-        newsService.deleteNew(newTitle);
-
+        synchronized (session.getAttribute("synNews")) {
+            newsService.deleteNew(newTitle);
+        }
         //删除后再进行查找
         /**
          * 查找对应新闻并传送前端
@@ -321,13 +351,19 @@ public class DoNews {
         List<News> newsList;
         if (mark == 0) {
             page = PageHelper.startPage(nowPage, pageSize);
-            newsList = newsService.selectNewsByMark(0);
+            synchronized (session.getAttribute("synNews")) {
+                newsList = newsService.selectNewsByMark(0);
+            }
         } else if (mark == 1) {
             page = PageHelper.startPage(nowPage, pageSize);
-            newsList = newsService.selectNewsByMark(1);
+            synchronized (session.getAttribute("synNews")) {
+                newsList = newsService.selectNewsByMark(1);
+            }
         } else {
             page = PageHelper.startPage(nowPage, pageSize);
-            newsList = newsService.selectAllNews();
+            synchronized (session.getAttribute("synNews")) {
+                newsList = newsService.selectAllNews();
+            }
         }
         //获取总页数
         int totalPage = page.getPages();
@@ -363,7 +399,10 @@ public class DoNews {
     public ModelAndView updateNew(String newTitle, HttpServletRequest request, HttpSession session) {
 
         //搜索出该新闻的所有信息
-        List<News> newsList = newsService.selectNewByTitle(newTitle);
+        List<News> newsList = null;
+        synchronized (session.getAttribute("synNews")) {
+            newsList = newsService.selectNewByTitle(newTitle);
+        }
         News news = newsList.get(0);
 
         //session传前端值
@@ -392,6 +431,7 @@ public class DoNews {
      */
     @ResponseBody
     @PostMapping("/upDateNewNoFile")
+    @Transactional
     public int upDateNewNoFile(String title, String context, String marked, int radio, HttpSession session) {
 
         //清空session
@@ -402,7 +442,11 @@ public class DoNews {
         session.removeAttribute("newMark");
 
         /*获取原先新闻对象*/
-        List<News> newsList = newsService.selectNewByTitle(oldTitle);
+
+        List<News> newsList = null;
+        synchronized (session.getAttribute("synNews")) {
+            newsList = newsService.selectNewByTitle(oldTitle);
+        }
         News news1 = newsList.get(0);   //
 
         /*对象存储信息*/
@@ -434,7 +478,9 @@ public class DoNews {
             news.setNewMark(0);
 
         //System.out.println(news);
-        newsService.updateNew(news,oldTitle);
+        synchronized (session.getAttribute("synNews")) {
+            newsService.updateNew(news, oldTitle);
+        }
         return 1000;
     }
 
@@ -453,7 +499,8 @@ public class DoNews {
      */
     @ResponseBody
     @PostMapping("/upDateNew")
-    public int upDateNew(@RequestParam("files") CommonsMultipartFile[] file, String title, String context, String marked, int radio, HttpServletRequest request,HttpSession session) {
+    @Transactional
+    public int upDateNew(@RequestParam("files") CommonsMultipartFile[] file, String title, String context, String marked, int radio, HttpServletRequest request, HttpSession session) {
 
         //清空session
         //session传前端值
@@ -483,7 +530,10 @@ public class DoNews {
         }
 
         /*获取原先新闻对象*/
-        List<News> newsList = newsService.selectNewByTitle(oldTitle);
+        List<News> newsList = null;
+        synchronized (session.getAttribute("synNews")) {
+            newsList = newsService.selectNewByTitle(oldTitle);
+        }
         News news1 = newsList.get(0);   //
 
         /*对象存储信息*/
@@ -528,7 +578,9 @@ public class DoNews {
             news.setNewMark(0);
 
         //System.out.println(news);
-        newsService.updateNew(news,oldTitle);
+        synchronized (session.getAttribute("synNews")) {
+            newsService.updateNew(news, oldTitle);
+        }
         return 1000;
     }
 

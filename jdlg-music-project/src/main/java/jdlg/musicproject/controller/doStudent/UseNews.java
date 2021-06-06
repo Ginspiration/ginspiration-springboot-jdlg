@@ -31,18 +31,19 @@ public class UseNews {
 
     /**
      * 查看新闻列表，并可实现翻页功能
-     * @param nowPage       当前页
-     * @param updatePage    更新页
+     *
+     * @param nowPage    当前页
+     * @param updatePage 更新页
      * @param model
      * @param request
      * @param session
-     * @Param mark  判断搜索的范围，0为未标记，1为标记，2为全部
      * @return
+     * @Param mark  判断搜索的范围，0为未标记，1为标记，2为全部
      */
     @GetMapping("viewNews")
     public ModelAndView aPage(int nowPage, int updatePage,
                               Model model, HttpServletRequest request,
-                              HttpSession session, int mark){
+                              HttpSession session, int mark) {
         //一页显示多少条数据
         int pageSize = 10;
 
@@ -56,15 +57,21 @@ public class UseNews {
          * */
         Page<Object> page;
         List<News> newsList;
-        if(mark == 0){
-            page = PageHelper.startPage(nowPage,pageSize);
-            newsList = newsService.selectNewsByMark(0);
-        }else if(mark == 1){
-            page = PageHelper.startPage(nowPage,pageSize);
-            newsList = newsService.selectNewsByMark(1);
-        }else{
-            page = PageHelper.startPage(nowPage,pageSize);
-            newsList = newsService.selectAllNews();
+        if (mark == 0) {
+            page = PageHelper.startPage(nowPage, pageSize);
+            synchronized (session.getAttribute("synNews")) {
+                newsList = newsService.selectNewsByMark(0);
+            }
+        } else if (mark == 1) {
+            page = PageHelper.startPage(nowPage, pageSize);
+            synchronized (session.getAttribute("synNews")) {
+                newsList = newsService.selectNewsByMark(1);
+            }
+        } else {
+            page = PageHelper.startPage(nowPage, pageSize);
+            synchronized (session.getAttribute("synNews")) {
+                newsList = newsService.selectAllNews();
+            }
         }
 
 
@@ -74,16 +81,16 @@ public class UseNews {
         nowPage = page.getPageNum();
 
         session.removeAttribute("nowPage");
-        session.setAttribute("nowPage",nowPage);
+        session.setAttribute("nowPage", nowPage);
 
         session.removeAttribute("totalPage");
         session.setAttribute("totalPage", totalPage);
 
         session.removeAttribute("news");
-        session.setAttribute("news",newsList);
+        session.setAttribute("news", newsList);
 
         session.removeAttribute("mark");
-        session.setAttribute("mark",mark);
+        session.setAttribute("mark", mark);
 
         ModelAndView mv = new ModelAndView();
         request.setAttribute("Context", UtilStudentWebURI.viewNews.getUri());
@@ -93,23 +100,27 @@ public class UseNews {
 
     /**
      * 搜索新闻
+     *
      * @param req
      * @param session
      * @return
      */
     @GetMapping("selectNew")
-    public ModelAndView selectNew(HttpServletRequest req,HttpSession session){
+    public ModelAndView selectNew(HttpServletRequest req, HttpSession session) {
 
         String title = req.getParameter("title");
-        System.out.println(title);
-        List<News> newsList = newsService.selectNewByTitle(title);
-        System.out.println(newsList);
+        //System.out.println(title);
+        List<News> newsList = null;
+        synchronized (session.getAttribute("synNews")) {
+            newsList = newsService.selectNewByTitle(title);
+        }
+        //System.out.println(newsList);
 
         session.removeAttribute("mark");
-        session.setAttribute("mark",3);
+        session.setAttribute("mark", 3);
 
         session.removeAttribute("news");
-        session.setAttribute("news",newsList);
+        session.setAttribute("news", newsList);
 
         ModelAndView mv = new ModelAndView();
         req.setAttribute("Context", UtilStudentWebURI.viewNews.getUri());
@@ -119,17 +130,20 @@ public class UseNews {
 
     /*新闻详情跳转*/
     @RequestMapping("/newsDetail")
-    public ModelAndView newsDetail(String newTitle,HttpServletRequest request,
-                                   HttpSession session){
+    public ModelAndView newsDetail(String newTitle, HttpServletRequest request,
+                                   HttpSession session) {
         ModelAndView mv = new ModelAndView();
         request.setAttribute("Context", UtilStudentWebURI.viewNewsDetail.getUri());
 
         //获取新闻对象
-        List<News> news = newsService.selectNewByTitle(newTitle);
+        List<News> news = null;
+        synchronized (session.getAttribute("synNews")) {
+            news = newsService.selectNewByTitle(newTitle);
+        }
         News news1 = news.get(0);
 
         session.removeAttribute("news");
-        session.setAttribute("news",news1);
+        session.setAttribute("news", news1);
 
         mv.setViewName("index/index-student");
         return mv;
