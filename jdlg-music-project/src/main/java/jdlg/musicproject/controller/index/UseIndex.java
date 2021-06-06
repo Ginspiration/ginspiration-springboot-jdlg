@@ -25,7 +25,7 @@ public class UseIndex {
      * @param request
      * @return
      */
-    @RequestMapping("index")
+    @RequestMapping("/")
     public ModelAndView index(HttpSession session,HttpServletRequest request){
         //获取标记新闻
         List<News> newsList = newsService.selectNewsByMark(1);
