@@ -11,7 +11,6 @@ import jdlg.musicproject.service.StudentService;
 import jdlg.musicproject.service.TeacherService;
 import jdlg.musicproject.service.TeacherServiceManageStudent;
 import jdlg.musicproject.util.UtilTeacherWebURI;
-import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;

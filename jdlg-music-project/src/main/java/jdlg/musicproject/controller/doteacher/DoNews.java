@@ -2,7 +2,6 @@ package jdlg.musicproject.controller.doteacher;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import jdlg.musicproject.entries.common.News;
 import jdlg.musicproject.entries.teacher.TeacherRegister;
 import jdlg.musicproject.entries.web.WebManage;
