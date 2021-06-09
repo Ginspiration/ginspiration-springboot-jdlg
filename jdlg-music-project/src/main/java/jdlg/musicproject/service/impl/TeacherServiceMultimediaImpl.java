@@ -56,7 +56,7 @@ public class TeacherServiceMultimediaImpl implements TeacherServiceMultimedia {
                     /*清空数据库*/
                     teacherDaoMultimedia.deleteKnow(title, cId);
                     /*删除本地文件*/
-                    String dirPath = System.getProperty("MyWebUrl") + "WEB-INF\\upload\\knowledge\\" + tId + "\\" + cId;
+                    String dirPath = System.getProperty("MyWebUrl") + "\\META-INF\\resources\\WEB-INF\\upload\\knowledge\\" + tId + "\\" + cId;
                     //String dirPath = "D:\\MusicProject\\Version3.0\\music-project\\target\\music-project-2.0\\WEB-INF\\upload\\knowledge\\"+tId+"\\"+cId;
                     File thisDirs = new File(dirPath);
                     File[] files = thisDirs.listFiles();
@@ -140,7 +140,8 @@ public class TeacherServiceMultimediaImpl implements TeacherServiceMultimedia {
                 InputStream in;
                 FileOutputStream out;
                 try {
-                    String dirPathPart = System.getProperty("MyWebUrl") + "WEB-INF\\upload\\knowledge\\";
+                    //String dirPathPart = System.getProperty("MyWebUrl") + "WEB-INF\\upload\\knowledge\\";
+                    String dirPathPart = System.getProperty("MyWebUrl") + "\\META-INF\\resources\\WEB-INF\\upload\\knowledge\\";
                     File teacherDir = new File(dirPathPart + tId);
                     if (!teacherDir.exists()) {
                         teacherDir.mkdir();
@@ -259,7 +260,7 @@ public class TeacherServiceMultimediaImpl implements TeacherServiceMultimedia {
                         return systemFalse;
                 }
             }
-            appreciate.setUrl((System.getProperty("MyWebUrl") + "WEB-INF\\upload\\appreciate\\" + tId + "\\" + appreciate.getCourseId() + "\\" + appreciate.getTitle()).replace("\\", "\\\\"));
+            appreciate.setUrl((System.getProperty("MyWebUrl") + "\\META-INF\\resources\\WEB-INF\\upload\\appreciate\\" + tId + "\\" + appreciate.getCourseId() + "\\" + appreciate.getTitle()).replace("\\", "\\\\"));
             appreciate.setImgNumber(imgNumber);
             appreciate.setMusicNumber(mp3Number);
             appreciate.setVideoNumber(videoNumber);
@@ -278,7 +279,7 @@ public class TeacherServiceMultimediaImpl implements TeacherServiceMultimedia {
     @Override
     public String deleteAppreciate(String title, Integer tId, Integer cId) {
         if (title != null && cId != null && tId != null) {
-            String path = System.getProperty("MyWebUrl") + "WEB-INF\\upload\\appreciate\\" + tId + "\\" + cId + "\\" + title;
+            String path = System.getProperty("MyWebUrl") + "\\META-INF\\resources\\WEB-INF\\upload\\appreciate\\" + tId + "\\" + cId + "\\" + title;
             File fileBig = new File(path);
             if (fileBig.exists()) {
                 File[] files = fileBig.listFiles();

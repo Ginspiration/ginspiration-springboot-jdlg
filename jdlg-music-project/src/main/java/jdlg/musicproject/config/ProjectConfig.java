@@ -5,6 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.*;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.util.WebAppRootListener;
 
 @Configuration
 //@ImportResource({"classpath:dispatcherServlet.xml", "classpath:applicationContext.xml", "classpath:mybatis.xml"})

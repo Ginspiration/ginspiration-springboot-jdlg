@@ -2,7 +2,6 @@ package jdlg.musicproject.controller.doteacher;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import jdlg.musicproject.entries.common.News;
 import jdlg.musicproject.entries.teacher.TeacherRegister;
 import jdlg.musicproject.entries.web.WebManage;
@@ -26,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -109,11 +109,21 @@ public class DoNews {
         //上传文件地址并保存realPath
         //System.out.println("上传文件保存地址：" + filePath);
 
+        //获取当前时间戳
+        long l = System.currentTimeMillis();
+        //获取文件后缀
+        String backword[] = new String[file.length];
+        for(int i = 0; i < file.length; i++){
+            backword[i] = file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf('.'));
+        }
+
+
         //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
+        //同时将文件名重命名为含时间戳的位
         for (int i = 0; i < file.length; i++) {
             MultipartFile file1 = file[i];
             try {
-                File file2 = new File(filePath + "/" + file[i].getOriginalFilename());
+                File file2 = new File(filePath + "/" + l + "_" +i  + backword[i]);
                 file1.transferTo(file2);
             } catch (IOException e) {
                 return 1001; //返回1001：文件上传失败
@@ -136,14 +146,17 @@ public class DoNews {
             }
         }
         news.setNewTitle(title);
+
+
+
         //对于文件路径，需循环保存，且为webapp的相对地址realPath。分隔符为&*&
         String realPath = "static/newsImg/";
         String url = "";
         for (int i = 0; i < file.length; i++) {
             if (i < file.length - 1) {
-                url += realPath + file[i].getOriginalFilename() + "&*&";
+                url += realPath + l + "_" +i + backword[i] + "&*&";
             } else
-                url += realPath + file[i].getOriginalFilename();
+                url += realPath + l + "_" +i + backword[i];
             //System.out.println(url);
         }
         //文件路径转义
@@ -315,10 +328,19 @@ public class DoNews {
         ModelAndView mv = new ModelAndView();
         request.setAttribute("Context", UtilTeacherWebURI.teacherViewNewsDetail.getUri());
 
+        //将前端转化的base64标题解码
+        if (newTitle != null) {
+            try {
+                newTitle = new String(Base64.getDecoder().decode(newTitle.replace(" ", "+")), "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
         //获取新闻对象
         List<News> news = null;
         synchronized (session.getAttribute("synNews")){
-             news = newsService.selectNewByTitle(newTitle);
+            news = newsService.selectNewByTitle(newTitle);
         }
         News news1 = news.get(0);
 
@@ -397,6 +419,15 @@ public class DoNews {
      */
     @GetMapping("/updateNew")
     public ModelAndView updateNew(String newTitle, HttpServletRequest request, HttpSession session) {
+
+        //将前端转化的base64标题解码
+        if (newTitle != null) {
+            try {
+                newTitle = new String(Base64.getDecoder().decode(newTitle.replace(" ", "+")), "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
 
         //搜索出该新闻的所有信息
         List<News> newsList = null;
@@ -509,6 +540,13 @@ public class DoNews {
         session.removeAttribute("newContext");
         session.removeAttribute("newMark");
 
+        //获取当前时间戳
+        long l = System.currentTimeMillis();
+        //获取文件后缀
+        String backword[] = new String[file.length];
+        for(int i = 0; i < file.length; i++){
+            backword[i] = file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf('.'));
+        }
 
         String path = request.getSession().getServletContext().getRealPath("/static/newsImg");
         File filePath = new File(path);
@@ -519,10 +557,11 @@ public class DoNews {
         //System.out.println("上传文件保存地址：" + filePath);
 
         //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
+        //同时将文件名重命名为含时间戳的位
         for (int i = 0; i < file.length; i++) {
             MultipartFile file1 = file[i];
             try {
-                File file2 = new File(filePath + "/" + file[i].getOriginalFilename());
+                File file2 = new File(filePath + "/" + l + "_" +i  + backword[i]);
                 file1.transferTo(file2);
             } catch (IOException e) {
                 return 1001; //返回1001：文件上传失败
@@ -553,9 +592,9 @@ public class DoNews {
         String url = "";
         for (int i = 0; i < file.length; i++) {
             if (i < file.length - 1) {
-                url += realPath + file[i].getOriginalFilename() + "&*&";
+                url += realPath + l + "_" +i  + backword[i] + "&*&";
             } else
-                url += realPath + file[i].getOriginalFilename();
+                url += realPath + l + "_" +i  + backword[i];
             //System.out.println(url);
         }
         //文件路径转义

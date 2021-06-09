@@ -9,7 +9,8 @@ import java.io.InputStream;
 
 public class SaveFiles {
     public static boolean doSave(MultipartFile file, Integer tId, Integer cId, String title, String type) {
-        String partDir = System.getProperty("MyWebUrl") + "WEB-INF\\upload\\appreciate\\" + tId + "\\" + cId + "\\" + title + "\\" + type + "\\";
+        //jdlg-music-project/target/classes/META-INF/resources/WEB-INF/upload/appreciate
+        String partDir = System.getProperty("MyWebUrl") + "\\META-INF\\resources\\WEB-INF\\upload\\appreciate\\" + tId + "\\" + cId + "\\" + title + "\\" + type + "\\";
         File file1 = new File(partDir);
         if (!file1.exists())
             file1.mkdirs();

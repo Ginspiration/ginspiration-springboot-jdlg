@@ -46,9 +46,15 @@
 <script>
     $(function () {
         $("#sub").click(function () {
-
-            if ($("input[name = 'tName']").val() == '' || $("input[name = 'tPwd']").val() == '') {
+            var tId = $("input[name = 'tId']").val()
+            var tPwd = $("input[name = 'tPwd']").val()
+            var reg=new RegExp(/^[0-9][0-9]{6}$/);
+            if (tId == '' ||tPwd  == '') {
                 alert("内容不可为空！")
+                return false
+            }else if (!reg.test(tId)){
+                //console.log(reg.test(tId));
+                alert("输入不规范！")
                 return false
             }
         })

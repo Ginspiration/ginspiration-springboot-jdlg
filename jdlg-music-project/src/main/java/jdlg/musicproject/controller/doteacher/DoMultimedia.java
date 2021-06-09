@@ -253,7 +253,7 @@ public class DoMultimedia {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            String path = System.getProperty("MyWebUrl") + "WEB-INF\\upload\\knowledge\\" + tId + "\\" + imgCId + "\\" + searchTitle;
+            String path = System.getProperty("MyWebUrl") + "\\META-INF\\resources\\WEB-INF\\upload\\knowledge\\" + tId + "\\" + imgCId + "\\" + searchTitle;
             File thisFile = new File(path);
             File[] files = thisFile.listFiles();
             for (int i = 0; i < files.length; i++) {
@@ -366,38 +366,44 @@ public class DoMultimedia {
 
     public static void writeFileToResponse(File file, int fileId, HttpServletResponse response) {
         File[] files = file.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            if (fileId == i) {
-                OutputStream outputStream = null;
-                InputStream in = null;
-                BufferedOutputStream out = null;
-                try {
-                    outputStream = response.getOutputStream();
-                    out = new BufferedOutputStream(outputStream);
-                    in = new FileInputStream(files[i].getAbsolutePath());
-                    String fileName = files[i].getName();
-                    //System.out.println(fileName.substring(fileName.lastIndexOf(".")));
-                    if (".mp4".equals(fileName.substring(fileName.lastIndexOf(".")))) {
-                        response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-                    }
-                    byte[] bytes = new byte[1024 * 500];
-                    int readCount;
-                    while ((readCount = in.read(bytes)) != -1) {
-                        out.write(bytes, 0, readCount);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                if (fileId == i) {
+                    OutputStream outputStream = null;
+                    InputStream in = null;
+                    BufferedOutputStream out = null;
                     try {
-                        out.flush();
-                        out.close();
-                        in.close();
+                        outputStream = response.getOutputStream();
+                        out = new BufferedOutputStream(outputStream);
+                        in = new FileInputStream(files[i].getAbsolutePath());
+                        String fileName = files[i].getName();
+                        //System.out.println(fileName);
+                        //System.out.println(fileName.substring(fileName.lastIndexOf(".")));
+                        if (".mp4".equals(fileName.substring(fileName.lastIndexOf(".")))) {
+                            //new String( fileName.getBytes("gb2312"), "ISO8859-1" )
+                            //response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+                            response.setHeader("Content-Disposition", "attachment;filename=" + new String( fileName.getBytes("gb2312"), "ISO8859-1" ));
+                        }
+                        byte[] bytes = new byte[1024 * 500];
+                        int readCount;
+                        while ((readCount = in.read(bytes)) != -1) {
+                            out.write(bytes, 0, readCount);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
+                    } finally {
+                        try {
+                            out.flush();
+                            out.close();
+                            in.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
         }
+
     }
 
     /*搜索视听*/
@@ -458,7 +464,11 @@ public class DoMultimedia {
             for (TeacherAppreciate appreciate : appreciates) {
                 TeacherAppreciate a = new TeacherAppreciate();
                 a.setTitle(appreciate.getTitle());
-                a.setContext(appreciate.getContext().substring(0, 20).trim() + "...");
+                String tempStr = appreciate.getContext();
+                if (tempStr.length() >20) {
+                    a.setContext(tempStr.substring(0, 20).trim() + "...");
+                }else
+                    a.setContext(tempStr);
                 a.setUpTime(appreciate.getUpTime());
                 appTemp.add(a);
             }

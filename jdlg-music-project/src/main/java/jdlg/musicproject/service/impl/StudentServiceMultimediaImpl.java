@@ -35,7 +35,9 @@ public class StudentServiceMultimediaImpl implements StudentServiceMultimedia {
                 TeacherKnowledge know = new TeacherKnowledge();
                 /*获取图片数量*/
                 File file = new File(k.getImgUrl());
-                know.setImgNumber(file.listFiles().length);
+                if (file.listFiles() != null) {
+                    know.setImgNumber(file.listFiles().length);
+                }
                 know.setId(i);
                 know.setImgUrl(k.getImgUrl());
                 know.setUpTime(k.getUpTime());

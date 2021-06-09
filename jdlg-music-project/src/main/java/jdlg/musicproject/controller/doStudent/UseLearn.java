@@ -145,7 +145,8 @@ public class UseLearn {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            String path = System.getProperty("MyWebUrl") + "WEB-INF\\upload\\knowledge\\" + tId + "\\" + imgCId + "\\" + searchTitle;
+            //String path = System.getProperty("MyWebUrl") + "WEB-INF\\upload\\knowledge\\" + tId + "\\" + imgCId + "\\" + searchTitle;
+            String path = System.getProperty("MyWebUrl") + "\\META-INF\\resources\\WEB-INF\\upload\\knowledge\\" + tId + "\\" + imgCId + "\\" + searchTitle;
             File thisFile = new File(path);
             File[] files = thisFile.listFiles();
             for (int i = 0; i < files.length; i++) {

@@ -9,9 +9,8 @@
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
-        <a href="skip/skip.jsp"><b>管理员权限</b></a>
+        <a><b>管理员权限</b></a>
     </div>
-
     <div class="register-box-body">
         <p class="login-box-msg">输入名和密码</p>
 

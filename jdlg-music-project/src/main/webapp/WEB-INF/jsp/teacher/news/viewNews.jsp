@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <script src="<%=basePath%>static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="<%=basePath%>static/plugins/base64/base64.js"></script>
 <script>
 
 
@@ -91,41 +92,68 @@
                     </div>
                 </div>
 
-                    <%--新闻展示--%>
-                    <c:forEach items="${news}" var="news" varStatus="status">
-                        <div class="panel panel-default">
-                            <div class="panel-body" style="">
+                <%--新闻展示--%>
+                <c:forEach items="${news}" var="news" varStatus="status">
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="">
                                 <%--展示标题--%>
-                                    <%--对标记新闻进行特别注释--%>
-                                    <div style="float: left;margin-right: 10px">&nbsp;<c:if test="${news.newMark == 1}">*</c:if></div>
-                                <a href="newsDetail?newTitle=${news.newTitle}" >${news.newTitle} </a>
-                                    <button id="delete" onclick="deleteNew${status.count}()" class="btn btn-danger" style="float: right;margin-left: 10px;">删除</button>
-                                    <a href="updateNew?newTitle=${news.newTitle}" class="btn btn-danger" style="float: right">修改</a>
-                                    <script>
-                                        //删除新闻
-                                        function deleteNew${status.count}() {
-                                            confirm({
-                                                title: '确认删除？',
-                                                content: '',
-                                                doneText: '确认',
-                                                cancelText: '取消'
-                                            }).then(() => {
-                                                window.location.href="deleteNew?newTitle=${news.newTitle}&nowPage=${nowPage}&updatePage=0&mark=${mark}"
-                                            }).catch(() => {
-                                            })``
-                                        }
-                                    </script>
+                                <%--对标记新闻进行特别注释--%>
+                            <div style="float: left;margin-right: 10px">&nbsp;<c:if test="${news.newMark == 1}">*</c:if></div>
+                            <button class="btn btn-link" onclick="convert${status.count}()">${news.newTitle} </button>
+                            <button id="delete" onclick="deleteNew${status.count}()" class="btn btn-warning" style="float: right;margin-left: 10px;">删除</button>
+                            <button onclick="updateConvert${status.count}()" class="btn btn-default" style="float: right">修改</button>
+                            <script>
+                                //删除新闻
+                                function deleteNew${status.count}() {
+                                    confirm({
+                                        title: '确认删除？',
+                                        content: '',
+                                        doneText: '确认',
+                                        cancelText: '取消'
+                                    }).then(() => {
+                                        window.location.href="deleteNew?newTitle=${news.newTitle}&nowPage=${nowPage}&updatePage=0&mark=${mark}"
+                                    }).catch(() => {
+                                    })``
+                                }
+
+                                //查看新闻详情
+                                //标题转化为unicode传输
+                                function convert${status.count}() {
+                                    let str = "${news.newTitle}";
+
+                                    var base = new Base64();
+                                    let a = base.encode(str)
+
+                                    console.log(a)
+
+                                    window.location.href = "newsDetail?newTitle=" + a;
+                                }
+
+                                //修改新闻跳转
+                                function updateConvert${status.count}(){
+                                    let str = "${news.newTitle}";
+
+                                    var base = new Base64();
+                                    let a = base.encode(str)
+
+                                    console.log(a)
+
+                                    window.location.href = "updateNew?newTitle=" + a;
+                                }
+
+
+                            </script>
                                 <%--展示发布时间--%>
-                                <span style="font-size: 10px;
+                            <span style="font-size: 10px;
                                 color:#8a8a8a;
                                 float:right;
                                 position: relative;
                                 right: 10px;top : 30px;">发布时间:${news.upDate}</span>
 
-                            </div>
                         </div>
-                    </c:forEach>
-                    <%--分页--%>
+                    </div>
+                </c:forEach>
+                <%--分页--%>
                 <c:if test="${mark != 3}">  <%--若搜索新闻则不显示--%>
                     <ul class="pagination pagination-sm inline" id="publishedPages">
                         <li id='totalPages'><a>共${totalPage}页</a></li>
@@ -140,26 +168,26 @@
                 </c:if>
 
 
-                    <hr/>
-                    <!-- Post -->
-                    <div id="thisContent">
-                        <%--<div class="post">
-                            <div>
-                                <span class="username">
-                                <a style="font-size: 20px;" href="">
+                <hr/>
+                <!-- Post -->
+                <div id="thisContent">
+                    <%--<div class="post">
+                        <div>
+                            <span class="username">
+                            <a style="font-size: 20px;" href="">
 
-                                </a>
-                                </span>
-                                <br/>
-                                <span class="description col-sm-12" style="font-size: 10px;color: #8a8a8a">发布时间：</span>
-                            </div>
-                            <p>
+                            </a>
+                            </span>
+                            <br/>
+                            <span class="description col-sm-12" style="font-size: 10px;color: #8a8a8a">发布时间：</span>
+                        </div>
+                        <p>
 
-                            </p>
-                        </div>--%>
-                    </div>
+                        </p>
+                    </div>--%>
                 </div>
             </div>
+        </div>
     </section>
 </div>
 

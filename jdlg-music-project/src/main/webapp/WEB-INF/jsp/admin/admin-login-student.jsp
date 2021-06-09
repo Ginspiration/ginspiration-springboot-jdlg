@@ -49,9 +49,13 @@
 <script>
     $(function () {
         $("#sub").click(function () {
-
-            if ($("input[name = 'sName']").val() == '' || $("input[name = 'sPwd']").val() == '') {
+            //创建正则表达式，/^[0-9][0-9]{6}$/ ：匹配6位数字
+            var reg=new RegExp(/^[0-9][0-9]{6}$/);
+            if ($("input[name = 'sId']").val() == '' || $("input[name = 'sPwd']").val() == '') {
                 alert("内容不可为空！")
+                return false
+            }else if (!reg.test($("input[name = 'sId']").val())){
+                alert("输入不规范！")
                 return false
             }
         })

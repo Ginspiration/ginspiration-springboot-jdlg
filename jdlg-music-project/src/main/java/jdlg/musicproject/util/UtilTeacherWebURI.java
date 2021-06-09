@@ -32,7 +32,8 @@ public enum UtilTeacherWebURI {
      */
     /*添加课程*/
     coursesAddUri("../teacher/courses/add-course.jsp"),
-
+    /*课程首页*/
+    courseIndexUrl("../teacher/courses/index-course.jsp"),
     /**
      * -------------------论坛--------------------------
      */

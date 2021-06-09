@@ -24,13 +24,38 @@ public interface TeacherCourseDao {
     List<CoursePlus> selectCoursePlus(@Param("t_id") Integer tId);
 
     /**
-     * 添加课程 往course表中添加数据,同时向tch_course表中添加数据
+     * 查询课程，根据courseName模糊查询
+     *
+     * @param tId        tID
+     * @param courseName courseName
+     * @return List<CoursePlus>
+     */
+    List<CoursePlus> selectCourseByCourseName(@Param("tId") Integer tId, @Param("courseName") String courseName);
+
+    /**
+     * 根据课程ID查询 CoursePlus
+     * @param cId cId
+     * @return CoursePlus
+     */
+    CoursePlus selectCourseByCId(@Param("cId") Integer cId);
+
+    /**
+     * 根据课程id和 学生id 查询课程状态
+     * @param cId cid
+     * @param sId sid
+     * @return status
+     */
+    int selectCourseStatusByCIdAndSId(@Param("cId") Integer cId, @Param("sId") Integer sId);
+
+    /**
+     * 添加课程 往course表中添加数据
      *
      * @param coursePlus 这个类中包含了
      * @return
      */
     int insertCourse(CoursePlus coursePlus);
-    int insertTchCourse(TeacherCourse course);//配合insertCourse()
+
+    int insertTchCourse(@Param("tId") Integer tId ,@Param("cId")Integer cId);
 
     /**
      * 删除课程，在course表中删除一条记录，前提是tch_course表中，这门课程是当前教师所教的
@@ -73,7 +98,7 @@ public interface TeacherCourseDao {
      * @param cId 课程id
      * @return
      */
-    List<Student> selectStuInCourse(Integer cId);
+    List<Student> selectStuInCourse(@Param("c_id") Integer cId);
 
     /**
      * 通过课程名来查找课程，数据库用 %like% 模糊查找，在tch_course表中联合course表查找，只显示当前教师自己的课程

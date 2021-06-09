@@ -1,7 +1,9 @@
 package jdlg.musicproject.config;
 
+import jdlg.musicproject.entries.teacher.Teacher;
 import jdlg.musicproject.interceptor.login.StudentInterceptor;
 import jdlg.musicproject.interceptor.login.TeacherInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -26,12 +28,16 @@ public class InterceptorConfig implements WebMvcConfigurer {
      *     </mvc:interceptors>
      * @param registry
      */
+    @Autowired
+    private TeacherInterceptor teacherInterceptor;
+    @Autowired
+    private StudentInterceptor studentInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //设置拦截路径
-       registry.addInterceptor(new TeacherInterceptor()).addPathPatterns("/doTeacher/*");
-       registry.addInterceptor(new StudentInterceptor()).addPathPatterns("/doStudent/*");
+       registry.addInterceptor(teacherInterceptor).addPathPatterns("/doTeacher/*");
+       registry.addInterceptor(studentInterceptor).addPathPatterns("/doStudent/*");
        //.excludePathPatterns(excludePathPatterns); //添加不需要拦截的路径
     }
 }

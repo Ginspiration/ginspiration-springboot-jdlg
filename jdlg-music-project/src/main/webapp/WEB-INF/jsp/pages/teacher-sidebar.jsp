@@ -60,30 +60,30 @@
                 <%--添加课程 删除课程 修改课程 搜索课程 推荐课程--%>
                 <ul class="treeview-menu">
                     <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> 搜索课程
+                        <a href="indexCourse">
+                            <i class="fa fa-circle-o"></i> 课程主页
                         </a>
                     </li>
-                    <li>
-                        <a href="addCourse">
-                            <i class="fa fa-circle-o"></i> 添加课程
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> 删除课程
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> 修改课程
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> 推荐课程
-                        </a>
-                    </li>
+<%--                    <li>--%>
+<%--                        <a href="addCourse">--%>
+<%--                            <i class="fa fa-circle-o"></i> 添加课程--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
+<%--                    <li>--%>
+<%--                        <a href="">--%>
+<%--                            <i class="fa fa-circle-o"></i> 删除课程--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
+<%--                    <li>--%>
+<%--                        <a href="">--%>
+<%--                            <i class="fa fa-circle-o"></i> 修改课程--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
+<%--                    <li>--%>
+<%--                        <a href="">--%>
+<%--                            <i class="fa fa-circle-o"></i> 推荐课程--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
                 </ul>
             </li>
             <%--课程管理--%>

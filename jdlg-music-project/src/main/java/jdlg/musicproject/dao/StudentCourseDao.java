@@ -3,6 +3,7 @@ package jdlg.musicproject.dao;
 import jdlg.musicproject.entries.common.CoursePlus;
 import org.apache.ibatis.annotations.Param;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface StudentCourseDao {
@@ -14,12 +15,11 @@ public interface StudentCourseDao {
     List<CoursePlus> selectAllCourse();
 
     /**
-     * 显示学生所有选择的课程,在stu_course，course表中通过学生id获取课程信息
-     *
-     * @param sId 学生Id
-     * @return
+     * 根据课程id查询课程信息
+     * @param cId cid
+     * @return CoursePlus
      */
-    List<CoursePlus> selectChosenCourse(@Param("s_id") Integer sId);
+    CoursePlus selectCourseById(@Param("cId") Integer cId);
 
 
     /**
@@ -32,20 +32,44 @@ public interface StudentCourseDao {
     int insertCourse(@Param("c_id") Integer cId, @Param("s_id") Integer sId);
 
     /**
-     * 显示所有已经完结的课程，列出stu_course表中，stu_course_status 字段值为1的记录
-     *
-     * @param sId 学生id
-     * @return
-     */
-    List<CoursePlus> selectCompletedCourse(@Param("s_id") Integer sId);
-
-
-    /**
      * 退选课程，在stu_course表中删除一条记录
-     *
      * @param cId 课程id
      * @param sId 学生id
      * @return
      */
     int deleteCourse(@Param("c_id") Integer cId, @Param("s_id") Integer sId);
+
+    /**
+     * 查询课程，根据Status查询，stu_course_status字段值=1：完结课程，字段=0：在学课程
+     *
+     * @param sId
+     * @return
+     */
+    List<CoursePlus> selectCourseByStatus(@Param("sId") Integer sId, @Param("status") Integer status);
+
+    /**
+     * 查询课程，根据courseName模糊查询
+     *
+     * @param sId        studentID
+     * @param courseName courseName
+     * @return List<CoursePlus>
+     */
+    List<CoursePlus> selectCourseByCourseName(@Param("sId") Integer sId, @Param("courseName") String courseName);
+
+
+    /**
+     * 根据课程id和 学生id 查询课程状态
+     * @param cId cid
+     * @param sId sid
+     * @return status
+     */
+    int selectCourseStatusByCIdAndSId(@Param("cId") Integer cId, @Param("sId") Integer sId);
+
+    /**
+     * 根据课程id查询教师id
+     * @param cId
+     * @return
+     */
+    String selectTNameByCourse(@Param("cId") Integer cId);
+
 }

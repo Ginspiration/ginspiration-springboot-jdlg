@@ -29,7 +29,11 @@
                 type: "post",
                 dataType: "text",
                 success: function (rep) {
-                    alert(rep)
+                    alert(rep+" 两秒后跳转")
+                    setTimeout(function () {
+                        //方法体
+                        $(location).attr('href', 'indexCourse')
+                    },2000)
                 }
             })
         }
@@ -56,6 +60,7 @@
                                 <label>Course Id</label>
                                 <input type="text" class="form-control" placeholder="课程编号" name="courseId">
                             </div>
+
                         </div>
                         <div class="box-footer">
                             <button type="button" class="btn btn-primary" onclick="checkCourse()">添加</button>

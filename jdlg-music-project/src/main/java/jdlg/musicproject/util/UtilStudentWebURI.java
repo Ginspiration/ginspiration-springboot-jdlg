@@ -21,7 +21,8 @@ public enum UtilStudentWebURI {
      */
     /*添加课程*/
     coursesAddUri("../student/course/add-course.jsp"),
-
+    /*显示课程*/
+    coursesIndex("../student/course/index-course.jsp"),
     /**
      * -------------------论坛--------------------------
      */
