@@ -40,6 +40,17 @@
                     }else
                         formDate.append("file", $('#upFile')[0].files[i])
                 }
+                //创建正则表达式，/^[0-9][0-9]{6}$/ ：匹配6位数字
+                var reg=new RegExp(/^[0-9][0-9]{6}$/);
+                //匹配返回true否则false
+                ifTrue = reg.test(id);
+                 if (id===''||name===''){
+                    alert("请输入完整内容")
+                    return false
+                }else if (!ifTrue){
+                     alert("课程编号格式不正确！")
+                     return false
+                 }
                 formDate.append("cId",id)
                 formDate.append("cName",name)
                 if (name == '' || id == '') {

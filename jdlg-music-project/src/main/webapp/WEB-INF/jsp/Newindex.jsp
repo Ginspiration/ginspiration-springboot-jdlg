@@ -141,19 +141,16 @@
 
                     <div class="col-md-12">
                         <!-- Box Comment -->
-                        <div class="box box-widget">
+                        <div class="box box-widget collapsed-box">
                             <div class="box-header with-border">
                                 <div class="user-block">
-                                    <span class="username"><a href="<%=basePath%>newsDetail?newTitle=${news.newTitle}">${news.newTitle}</a></span>
+                                    <span class="username"><a>${news.newTitle}</a></span>
                                     <span class="description">发布时间:${news.upDate}</span>
                                 </div>
                                 <!-- /.user-block -->
                                 <div class="box-tools">
-                                    <button type="button" class="btn btn-box-tool" data-toggle="tooltip"
-                                            title="Mark as read">
-                                        <i class="fa fa-circle-o"></i></button>
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                            class="fa fa-plus">点击展开</i>
                                     </button>
                                     <button type="button" class="btn btn-box-tool" data-widget="remove"><i
                                             class="fa fa-times"></i></button>
@@ -211,9 +208,9 @@
     <!-- 底部导航 -->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 1.0.8
+            <b>Version</b> 1.0.0
         </div>
-        <strong>Copyright &copy; 2014-2017 <a href="http://www.itcast.cn">研究院研发部</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2020-2021 <a href="https://www.ecjtuit.edu.cn">华东交通大学理工学院</a></strong>
     </footer>
     <!-- 底部导航 /-->
 
