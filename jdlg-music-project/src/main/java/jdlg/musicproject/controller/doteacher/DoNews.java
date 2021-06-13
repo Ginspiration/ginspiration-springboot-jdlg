@@ -101,7 +101,8 @@ public class DoNews {
 
         /*文件上传*/
         //上传路径保存设置
-        String path = request.getSession().getServletContext().getRealPath("/static/newsImg");
+        String path = System.getProperty("MyWebUrl") + "\\META-INF\\resources\\static\\newsImg";
+        //String path = request.getSession().getServletContext().getRealPath("/static/newsImg");
         File filePath = new File(path);
         if (!filePath.exists()) {
             filePath.mkdir();
@@ -113,7 +114,7 @@ public class DoNews {
         long l = System.currentTimeMillis();
         //获取文件后缀
         String backword[] = new String[file.length];
-        for(int i = 0; i < file.length; i++){
+        for (int i = 0; i < file.length; i++) {
             backword[i] = file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf('.'));
         }
 
@@ -123,7 +124,7 @@ public class DoNews {
         for (int i = 0; i < file.length; i++) {
             MultipartFile file1 = file[i];
             try {
-                File file2 = new File(filePath + "/" + l + "_" +i  + backword[i]);
+                File file2 = new File(filePath + "/" + l + "_" + i + backword[i]);
                 file1.transferTo(file2);
             } catch (IOException e) {
                 return 1001; //返回1001：文件上传失败
@@ -135,7 +136,7 @@ public class DoNews {
         news.setNewContext(context);
         //存储标题前，需先查找是否有重复标题
         List<News> getTitleList = null;
-        synchronized (session.getAttribute("synNews")){
+        synchronized (session.getAttribute("synNews")) {
             getTitleList = newsService.selectAllNews();
         }
         for (News news1 : getTitleList) {
@@ -148,15 +149,14 @@ public class DoNews {
         news.setNewTitle(title);
 
 
-
         //对于文件路径，需循环保存，且为webapp的相对地址realPath。分隔符为&*&
         String realPath = "static/newsImg/";
         String url = "";
         for (int i = 0; i < file.length; i++) {
             if (i < file.length - 1) {
-                url += realPath + l + "_" +i + backword[i] + "&*&";
+                url += realPath + l + "_" + i + backword[i] + "&*&";
             } else
-                url += realPath + l + "_" +i + backword[i];
+                url += realPath + l + "_" + i + backword[i];
             //System.out.println(url);
         }
         //文件路径转义
@@ -192,7 +192,7 @@ public class DoNews {
         //存储标题前，需先查找是否有重复标题
         //List<News> getTitleList = newsService.selectAllNews();
         List<News> getTitleList = null;
-        synchronized (session.getAttribute("synNews")){
+        synchronized (session.getAttribute("synNews")) {
             getTitleList = newsService.selectAllNews();
         }
         for (News news1 : getTitleList) {
@@ -339,7 +339,7 @@ public class DoNews {
 
         //获取新闻对象
         List<News> news = null;
-        synchronized (session.getAttribute("synNews")){
+        synchronized (session.getAttribute("synNews")) {
             news = newsService.selectNewByTitle(newTitle);
         }
         News news1 = news.get(0);
@@ -360,8 +360,30 @@ public class DoNews {
         //System.out.println("delete");
         //一页显示多少条数据
         int pageSize = 10;
+
         synchronized (session.getAttribute("synNews")) {
-            newsService.deleteNew(newTitle);
+            //获取当前新闻信息
+            List<News> newsList = newsService.selectNewByTitle(newTitle);
+            News news = newsList.get(0);
+            //获取图片路径
+            String path = System.getProperty("MyWebUrl") + "\\META-INF\\resources\\";
+            //String path = request.getSession().getServletContext().getRealPath("/");
+            String url = news.getNewImgUrl();
+            String[] newUrl = url.split("&*&");
+            //删除文件
+            for (int i = 0; i < newUrl.length; i++) {
+                //获取绝对路径
+                String realPath = path + newUrl[i];
+                //删除文件
+                File file = new File(realPath);
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
+
+            synchronized (session.getAttribute("synNews")) {
+                newsService.deleteNew(newTitle);
+            }
         }
         //删除后再进行查找
         /**
@@ -544,11 +566,11 @@ public class DoNews {
         long l = System.currentTimeMillis();
         //获取文件后缀
         String backword[] = new String[file.length];
-        for(int i = 0; i < file.length; i++){
+        for (int i = 0; i < file.length; i++) {
             backword[i] = file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf('.'));
         }
-
-        String path = request.getSession().getServletContext().getRealPath("/static/newsImg");
+        String path = System.getProperty("MyWebUrl") + "\\META-INF\\resources\\static\\newsImg";
+        //String path = request.getSession().getServletContext().getRealPath("/static/newsImg");
         File filePath = new File(path);
         if (!filePath.exists()) {
             filePath.mkdir();
@@ -561,7 +583,7 @@ public class DoNews {
         for (int i = 0; i < file.length; i++) {
             MultipartFile file1 = file[i];
             try {
-                File file2 = new File(filePath + "/" + l + "_" +i  + backword[i]);
+                File file2 = new File(filePath + "/" + l + "_" + i + backword[i]);
                 file1.transferTo(file2);
             } catch (IOException e) {
                 return 1001; //返回1001：文件上传失败
@@ -592,9 +614,9 @@ public class DoNews {
         String url = "";
         for (int i = 0; i < file.length; i++) {
             if (i < file.length - 1) {
-                url += realPath + l + "_" +i  + backword[i] + "&*&";
+                url += realPath + l + "_" + i + backword[i] + "&*&";
             } else
-                url += realPath + l + "_" +i  + backword[i];
+                url += realPath + l + "_" + i + backword[i];
             //System.out.println(url);
         }
         //文件路径转义
@@ -602,8 +624,35 @@ public class DoNews {
 
         //需先确定radio类型
         if (radio == 1) {  // 1.添加图片
-            url = news1.getNewImgUrl() + url;
+            url = news1.getNewImgUrl() +"&*&"+ url;
         } else if (radio == 2) {   //删除图片
+
+            //先删除原来的图片
+            //获取当前新闻信息
+            List<News> newsList2 = newsService.selectNewByTitle(title);
+            News news2 = newsList2.get(0);
+            //获取图片路径
+            String path2 = System.getProperty("MyWebUrl") + "\\META-INF\\resources\\";
+            //String path2 = request.getSession().getServletContext().getRealPath("/");
+            String url2 = news2.getNewImgUrl();
+            if (url2.contains("&*&")) {
+                String[] newUrl = url2.split("&*&");
+                //删除文件
+                for (int i = 0; i < newUrl.length; i++) {
+                    //获取绝对路径
+                    String realPath2 = path2 + newUrl[i];
+                    //删除文件
+                    File file2 = new File(realPath2);
+                    if (file2.exists()) {
+                        file2.delete();
+                    }
+                }
+            } else {
+                File file1 = new File(path2 + url2);
+                if (file1.exists()) {
+                    file1.delete();
+                }
+            }
             url = url;
         } else if (radio == 3) {
             url = news1.getNewImgUrl();
@@ -622,5 +671,4 @@ public class DoNews {
         }
         return 1000;
     }
-
 }

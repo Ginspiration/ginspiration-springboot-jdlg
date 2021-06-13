@@ -46,7 +46,7 @@
 
 
         <!-- Logo -->
-        <a href="skip/skip.jsp" class="logo">
+        <a href="" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>音乐</b></span>
             <!-- logo for regular state and mobile devices -->
