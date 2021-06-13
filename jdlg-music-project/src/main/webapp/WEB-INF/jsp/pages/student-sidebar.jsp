@@ -94,7 +94,7 @@
                 <ul class="treeview-menu">
                     <li>
                         <a href="indexCourse">
-                            <i class="fa fa-circle-o"></i> 在学课程
+                            <i class="fa fa-circle-o"></i> 我的课程
                         </a>
                     </li>
 <%--                    <li>--%>
@@ -102,11 +102,11 @@
 <%--                            <i class="fa fa-circle-o"></i> 已学课程--%>
 <%--                        </a>--%>
 <%--                    </li>--%>
-                    <li>
-                        <a href="addCourse">
-                            <i class="fa fa-circle-o"></i> 新增课程
-                        </a>
-                    </li>
+<%--                    <li>--%>
+<%--                        <a href="addCourse">--%>
+<%--                            <i class="fa fa-circle-o"></i> 新增课程--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
                 </ul>
             </li>
             <%--课程--%>

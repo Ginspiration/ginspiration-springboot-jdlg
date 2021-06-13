@@ -65,6 +65,7 @@ public interface TeacherCourseDao {
      * @return
      */
     int deleteCourse(@Param("c_id") Integer cId, @Param("t_id") Integer tId);
+    int deleteCourseRoot(@Param("c_id")Integer cId);
 
     /**
      * 通过cId获取tId,工具方法,返回为空说明当前教师没有该课程

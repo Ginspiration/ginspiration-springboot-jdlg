@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="<%=basePath%>static/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
 <link rel="stylesheet" href="<%=basePath%>static/plugins/adminLTE/css/AdminLTE.css">
 <link rel="stylesheet" href="<%=basePath%>static/plugins/adminLTE/css/skins/_all-skins.min.css">
-<link rel="stylesheet" href="<%=basePath%>static/css/style.css">
+<%--<link rel="stylesheet" href="<%=basePath%>static/css/style.css">--%>
 <link rel="stylesheet" href="<%=basePath%>static/plugins/ionslider/ion.rangeSlider.css">
 <link rel="stylesheet" href="<%=basePath%>static/plugins/ionslider/ion.rangeSlider.skinNice.css">
 <link rel="stylesheet" href="<%=basePath%>static/plugins/bootstrap-slider/slider.css">

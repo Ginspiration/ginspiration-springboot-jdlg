@@ -37,6 +37,9 @@
                 }
             })
         }
+        function goToCourseIndex() {
+            window.location.href='indexCourse'
+        }
     </script>
 </head>
 <body>
@@ -52,10 +55,6 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label><h4>说明：</h4><h5>加入新课程</h5></label>
-                            <%--                            <div class="form-group">
-                                                            <label>Course Name</label>
-                                                            <input type="text" class="form-control" placeholder="课程名" name="courseName">
-                                                        </div>--%>
                             <div class="form-group">
                                 <label>Course Id</label>
                                 <input type="text" class="form-control" placeholder="课程编号" name="courseId">
@@ -64,6 +63,10 @@
                         </div>
                         <div class="box-footer">
                             <button type="button" class="btn btn-primary" onclick="checkCourse()">添加</button>
+                        </div>
+                        <hr/>
+                        <div>
+                            <button type="button" onclick="goToCourseIndex()">回到课程主页</button>
                         </div>
                     </div>
                 </form>

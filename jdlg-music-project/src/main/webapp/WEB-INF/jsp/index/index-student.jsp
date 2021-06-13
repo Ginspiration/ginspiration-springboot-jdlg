@@ -30,7 +30,7 @@
 
     <!-- 页面头部 -->
     <header class="main-header">
-        <a href="state" class="logo">
+        <a href="" class="logo">
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg"><b>学生</b>前台</span>
         </a>
