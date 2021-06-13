@@ -21,11 +21,11 @@ public class TeacherInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//        String tName = (String) request.getSession().getAttribute("tName");
-//        if ( tName == null) {
-//            response.sendRedirect("/");
-//            return false;
-//        } else
+        String tName = (String) request.getSession().getAttribute("tName");
+        if ( tName == null) {
+            response.sendRedirect("/");
+            return false;
+        } else
         return true;
     }
 }
