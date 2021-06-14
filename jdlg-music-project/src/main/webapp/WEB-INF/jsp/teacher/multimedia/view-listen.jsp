@@ -62,7 +62,7 @@
                 var context = $("textarea[name='context']").val();
                 var title = $("input[name='title']").val();
                 var cId = $("#selected").val();
-                upFiles.append("title", title);
+                upFiles.append("title", title.trim());
                 upFiles.append("context", context);
                 upFiles.append("courseId", cId);
                 var selectImg = $('#image_')[0]
@@ -196,6 +196,7 @@
 
         var totalPages;
         var nowPage = 1;
+        var pageFlag = 0;
 
         function ajaxShowAppreciate(index) {
             var cId = $('#selected2').val()
@@ -248,23 +249,26 @@
                             if (res.musicNumber !== 0) {
                                 $('#music' + i).empty()
                                 for (let j = 0; j < res.musicNumber; j++) {
-                                    $('#music' + i).append("<audio style='padding: 2px' src='showViewListen?mediaFlag=music&contextId=" + res.id + "&musicId=" + j + "' controls='controls'></audio>")
+                                    $('#music' + i).append("<audio style='padding: 2px' src='showViewListen?pageFlag="+pageFlag+"&mediaFlag=music&contextId=" + res.id + "&musicId=" + j + "' controls='controls'></audio>")
                                 }
                             }
                             if (res.videoNumber !== 0) {
                                 $('#video' + i).empty()
                                 for (let j = 0; j < res.videoNumber; j++) {
-                                    $('#video' + i).append("<a class='btn btn-success' href='showViewListen?mediaFlag=video&contextId=" + res.id + "&videoId=" + j + "'>点此下载视频" + (j + 1) + "</a>&nbsp;&nbsp;");
+                                    $('#video' + i).append("<a class='btn btn-success' href='showViewListen?pageFlag="+pageFlag+"&mediaFlag=video&contextId=" + res.id + "&videoId=" + j + "'>点此下载视频-" + (j + 1) + "</a>&nbsp;&nbsp;");
+                                    //$('#video' + i).append("<a class='btn btn-success' onclick='handlerVideo("+i+","+res.id+","+j+")'>点此播放视频-" + (j + 1) + "</a>&nbsp;&nbsp;");
+                                    //$('#video' + i).append("<video style='width: 450px' src='showViewListen?mediaFlag=video&contextId=" + res.id + "&videoId=" + j + "' controls='controls'></video>")
                                 }
                             }
                             if (res.imgNumber !== 0) {
                                 $('#image' + i).empty()
                                 for (let j = 0; j < res.imgNumber; j++) {
-                                    $('#image' + i).append("<a onclick=\"window.open('showViewListen?mediaFlag=image&contextId=" + res.id + "&imgId=" + j + "')\">" +
-                                        "<img style='width:%30;padding: 2px' src='showViewListen?mediaFlag=image&contextId=" + res.id + "&imgId=" + j + "' height='200'>\n" +
+                                    $('#image' + i).append("<a onclick=\"window.open('showViewListen?pageFlag="+pageFlag+"&mediaFlag=image&contextId=" + res.id + "&imgId=" + j + "')\">" +
+                                        "<img style='width:%30;padding: 2px' src='showViewListen?pageFlag="+pageFlag+"&mediaFlag=image&contextId=" + res.id + "&imgId=" + j + "' height='200'>\n" +
                                         "                </a>")
                                 }
                             }
+                            pageFlag++;
                         }
                     })
                     $('#publishedPages').empty()
@@ -314,6 +318,11 @@
                 // }
             })
         }
+
+        // function handlerVideo(i,id,j) {
+        //     $('#showVideo'+i).empty()
+        //     $('#showVideo' + i).append("<br/><video style='width: 450px' src='showViewListen?mediaFlag=video&contextId=" + id + "&videoId=" + j + "' controls='controls'></video>")
+        // }
 
         function ajaxSearchrAppreciate() {
             var count = 0;
@@ -439,6 +448,9 @@
 <div class="content-wrapper">
     <!--内容头部显示用户名称-->
     <section class="content-header">
+        <div>
+            <p>鉴赏</p>
+        </div>
         <h1>
             ${sessionScope.tName}
             <small>(教师)</small>

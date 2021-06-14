@@ -5,90 +5,84 @@
 <!--工作空间，定位到dao的接口-->
 <mapper namespace="jdlg.musicproject.dao.TeacherDaoMultimedia">
     <insert id="insertKnow">
-        insert into knowledge (know_title,know_context,know_img_url,know_course_id,know_time) values ('${title}','${context}','${imgUrl}',${courseId},'${upTime}')
+        insert into knowledge (know_title, know_context, know_img_url, know_course_id, know_time)
+        values ('${title}', '${context}', '${imgUrl}', ${courseId}, '${upTime}')
     </insert>
     <delete id="deleteKnow">
-        delete from knowledge
-        where
-        know_title = '${k_title}' and  know_course_id = ${k_cid}
+        delete
+        from knowledge
+        where know_title = '${k_title}'
+          and know_course_id = ${k_cid}
     </delete>
     <update id="modifyKnow">
-        update knowledge set know_title = '${title}',know_context = '${context}',know_img_url = '${imgUrl}',know_course_id = ${courseId}
-        where
-        know_title = '${title}' and know_course_id = ${courseId}
+        update knowledge
+        set know_title     = '${title}',
+            know_context   = '${context}',
+            know_img_url   = '${imgUrl}',
+            know_course_id = ${courseId}
+        where know_title = '${title}'
+          and know_course_id = ${courseId}
     </update>
     <select id="seekKnow" resultType="jdlg.musicproject.entries.teacher.TeacherKnowledge">
-        select
-        know_title title,
-        know_context context,
-        know_img_url imgUrl,
-        know_course_id courseId,
-        know_time upTime
-        from
-        knowledge
-        where
-        know_course_id = ${k_cid}
-        and
-        know_title like '${k_index}'
+        select know_title     title,
+               know_context   context,
+               know_img_url   imgUrl,
+               know_course_id courseId,
+               know_time      upTime
+        from knowledge
+        where know_course_id = ${k_cid}
+          and know_title like '${k_index}'
     </select>
     <select id="selectAllKnow" resultType="jdlg.musicproject.entries.teacher.TeacherKnowledge">
-        select
-        id,
-        know_title title,
-        know_context context,
-        know_img_url imgUrl,
-        know_course_id courseId,
-        know_time upTime
-        from
-        knowledge
+        select id,
+               know_title     title,
+               know_context   context,
+               know_img_url   imgUrl,
+               know_course_id courseId,
+               know_time      upTime
+        from knowledge
         where know_course_id = ${k_cid}
-        order by know_time
+        order by know_time desc
     </select>
     <insert id="insertAppreciate">
-        insert into appreciate (app_title,app_context,app_url,app_img_number,app_music_number,app_video_number,app_course_id,app_date)
-        values ('${title}','${context}','${url}',${imgNumber},${musicNumber},${videoNumber},${courseId},'${upTime}')
+        insert into appreciate (app_title, app_context, app_url, app_img_number, app_music_number, app_video_number,
+                                app_course_id, app_date)
+        values ('${title}', '${context}', '${url}', ${imgNumber}, ${musicNumber}, ${videoNumber}, ${courseId},
+                '${upTime}')
     </insert>
     <delete id="deleteAppreciate">
-        delete from appreciate
-        where
-        app_title = '${app_title}'
-        and
-        app_course_id = ${app_cId}
+        delete
+        from appreciate
+        where app_title = '${app_title}'
+          and app_course_id = ${app_cId}
     </delete>
     <select id="findAppreciate" resultType="jdlg.musicproject.entries.teacher.TeacherAppreciate">
-        select
-        id,
-        app_title title,
-        app_context context,
-        app_url url,
-        app_img_number imgNumber,
-        app_music_number musicNumber,
-        app_video_number videoNumber,
-        app_course_id courseId,
-        app_date upTime
-        from
-        appreciate
-        where
-        app_course_id = ${app_cId}
-        and
-        app_title like '${app_title}'
+        select id,
+               app_title        title,
+               app_context      context,
+               app_url          url,
+               app_img_number   imgNumber,
+               app_music_number musicNumber,
+               app_video_number videoNumber,
+               app_course_id    courseId,
+               app_date         upTime
+        from appreciate
+        where app_course_id = ${app_cId}
+          and app_title like '${app_title}'
     </select>
     <select id="selectAllAppreciate" resultType="jdlg.musicproject.entries.teacher.TeacherAppreciate">
-        select
-        id,
-        app_title title,
-        app_context context,
-        app_url url,
-        app_img_number imgNumber,
-        app_music_number musicNumber,
-        app_video_number videoNumber,
-        app_course_id courseId,
-        app_date upTime
-        from
-        appreciate
-        where
-        app_course_id = ${app_cId}
-        order by
-        upTime
+        select id,
+               app_title        title,
+               app_context      context,
+               app_url          url,
+               app_img_number   imgNumber,
+               app_music_number musicNumber,
+               app_video_number videoNumber,
+               app_course_id    courseId,
+               app_date         upTime
+        from appreciate
+        where app_course_id = ${app_cId}
+        order by upTime
+            desc
     </select>
 </mapper>

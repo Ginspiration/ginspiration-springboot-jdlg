@@ -34,6 +34,7 @@
 
         var totalPages;
         var nowPage = 1;
+        var pageFlag = 0;
 
         function ajaxShowAppreciate(index) {
             var cId = $('#selectedStu').val()
@@ -87,20 +88,21 @@
                             if (res.musicNumber !== 0) {
                                 $('#music' + i).empty()
                                 for (let j = 0; j < res.musicNumber; j++) {
-                                    $('#music' + i).append("<audio style='padding: 2px' src='showViewListenStu?mediaFlag=music&contextId=" + res.id + "&musicId=" + j + "' controls='controls'></audio>")
+                                    $('#music' + i).append("<audio style='padding: 2px' src='showViewListenStu?pageFlag="+pageFlag+"&mediaFlag=music&contextId=" + res.id + "&musicId=" + j + "' controls='controls'></audio>")
                                 }
                             }
                             if (res.videoNumber !== 0) {
                                 $('#video' + i).empty()
                                 for (let j = 0; j < res.videoNumber; j++) {
-                                    $('#video' + i).append("<a class='btn btn-success' href='showViewListenStu?mediaFlag=video&contextId=" + res.id + "&videoId=" + j + "'>点此下载视频" + (j + 1) + "</a>&nbsp;&nbsp;");
+                                    //$('#video' + i).append("<a class='btn btn-success' onclick='handlerVideo("+i+","+res.id+","+j+")'>点此播放视频-" + (j + 1) + "</a>&nbsp;&nbsp;");
+                                    $('#video' + i).append("<a class='btn btn-success' href='showViewListenStu?pageFlag="+pageFlag+"&mediaFlag=video&contextId=" + res.id + "&videoId=" + j + "'>点此下载视频-" + (j + 1) + "</a>&nbsp;&nbsp;");
                                 }
                             }
                             if (res.imgNumber !== 0) {
                                 $('#image' + i).empty()
                                 for (let j = 0; j < res.imgNumber; j++) {
-                                    $('#image' + i).append("<a onclick=\"window.open('showViewListenStu?mediaFlag=image&contextId=" + res.id + "&imgId=" + j + "')\">" +
-                                        "<img style='width:%30;padding: 2px' src='showViewListenStu?mediaFlag=image&contextId=" + res.id + "&imgId=" + j + "' height='200'>\n" +
+                                    $('#image' + i).append("<a onclick=\"window.open('showViewListenStu?pageFlag="+pageFlag+"&mediaFlag=image&contextId=" + res.id + "&imgId=" + j + "')\">" +
+                                        "<img style='width:%30;padding: 2px' src='showViewListenStu?pageFlag="+pageFlag+"&mediaFlag=image&contextId=" + res.id + "&imgId=" + j + "' height='200'>\n" +
                                         "                </a>")
                                 }
                             }
@@ -149,7 +151,10 @@
                 }
             })
         }
-
+        // function handlerVideo(i,id,j) {
+        //     $('#showVideo'+i).empty()
+        //     $('#showVideo' + i).append("<br/><video style='width: 450px' src='showViewListen?mediaFlag=video&contextId=" + id + "&videoId=" + j + ".mp4' controls='controls'></video>")
+        // }
         function ajaxSearchAppreciate() {
             var count = 0;
             var cId = $('#selectedStu').val()

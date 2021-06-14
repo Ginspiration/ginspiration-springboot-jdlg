@@ -133,6 +133,7 @@
 
         var nowPage = 1;
         var totalPages = 0;
+        var pageFlag = 0;
 
         function ajaxShowKnowledge(index) {
             var cId = $('#selected2').val()
@@ -149,7 +150,7 @@
                 type: 'get',
                 async: false,
                 success: function (rep) {
-                    $('#thisContent').children().remove();
+                    $('#thisContent').empty()
                     $.each(rep, function (i, res) {
                         if (res.courseId === -1) {
                             totalPages = res.id
@@ -172,10 +173,12 @@
                                 "                        </div>\n" +
                                 "                    </div>")
                             for (var j = 0; j < res.imgNumber; j++) {
-                                $('#imgs' + i).append("<a onclick=\"window.open('showKnowledge?knowId=" + res.id + "&img=" + j + "&cId2=" + cId + "')\">" +
-                                    "<img style='width:%30;padding: 2px' src='showKnowledge?knowId=" + res.id + "&img=" + j + "&cId2=" + cId + "' height='200'>\n" +
+                                //console.log('j:'+j)
+                                $('#imgs' + i).append("<a onclick=\"window.open('showKnowledge?pageFlag="+pageFlag+"&knowId=" + res.id + "&img=" + j + "&cId2=" + cId + "')\">" +
+                                    "<img style='width:%30;padding: 2px' src='showKnowledge?pageFlag="+pageFlag+"&knowId=" + res.id + "&img=" + j + "&cId2=" + cId + "' height='200'>\n" +
                                     "                </a>")
                             }
+                        pageFlag++;
                         }
                     })
 
@@ -335,6 +338,9 @@
 <div class="content-wrapper">
     <!-- 内容头部 -->
     <section class="content-header">
+        <div>
+            <p>基础理论</p>
+        </div>
         <h1>
             ${sessionScope.tName}
             <small>(教师)</small>

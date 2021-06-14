@@ -1,5 +1,6 @@
 package jdlg.musicproject.controller.doteacher;
 
+
 import jdlg.musicproject.dao.TeacherDao;
 import jdlg.musicproject.dao.TeacherDaoMultimedia;
 import jdlg.musicproject.entries.teacher.TeacherAppreciate;
@@ -8,6 +9,8 @@ import jdlg.musicproject.entries.teacher.TeacherKnowledge;
 import jdlg.musicproject.service.TeacherServiceMultimedia;
 import jdlg.musicproject.service.impl.TeacherServiceMultimediaImpl;
 import jdlg.musicproject.util.UtilTeacherWebURI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +35,8 @@ public class DoMultimedia {
     private TeacherDaoMultimedia teacherDaoMultimedia;
     @Resource(name = "teacherServiceMultimediaImpl")
     private TeacherServiceMultimedia teacherServiceMultimediaImpl;
+    //打印错误日志
+    private final static Logger logger = LoggerFactory.getLogger(DoMultimedia.class);
 
     /*转发学习基础知识页面*/
     @RequestMapping("/forwardToMultimedia")
@@ -111,6 +116,9 @@ public class DoMultimedia {
 
 
         if (tempKnowId != null && tempCId2 != null && tempImgId != null) {
+            //System.out.println(tempKnowId);
+            //System.out.println(tempCId2);
+            //System.out.println(tempImgId);
             knowId = Integer.parseInt(tempKnowId);
             imgId = Integer.parseInt(tempImgId);
             cId2 = Integer.parseInt(tempCId2);
@@ -137,6 +145,8 @@ public class DoMultimedia {
                     try {
                         for (int i = 0; i < thisFile.length; i++) {
                             if (i == imgId.intValue()) {
+                                //response.setHeader("Content-Disposition", "attachment;filename=" + new String( thisFile[i].getName().getBytes("gb2312"), "ISO8859-1" ));
+                                //System.out.println(thisFile[i].getName());
                                 InputStream in = new FileInputStream(thisFile[i]);
                                 OutputStream out = response.getOutputStream();
                                 byte[] bytes = new byte[1024 * 1024];
@@ -382,7 +392,7 @@ public class DoMultimedia {
                         if (".mp4".equals(fileName.substring(fileName.lastIndexOf(".")))) {
                             //new String( fileName.getBytes("gb2312"), "ISO8859-1" )
                             //response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-                            response.setHeader("Content-Disposition", "attachment;filename=" + new String( fileName.getBytes("gb2312"), "ISO8859-1" ));
+                            response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("gb2312"), "ISO8859-1"));
                         }
                         byte[] bytes = new byte[1024 * 500];
                         int readCount;
@@ -390,14 +400,14 @@ public class DoMultimedia {
                             out.write(bytes, 0, readCount);
                         }
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        logger.info("--浏览器关闭了视频播放请求--");
                     } finally {
                         try {
                             out.flush();
                             out.close();
                             in.close();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            logger.info("--视频播放IO流未正常关闭--");
                         }
                     }
                 }
@@ -465,9 +475,9 @@ public class DoMultimedia {
                 TeacherAppreciate a = new TeacherAppreciate();
                 a.setTitle(appreciate.getTitle());
                 String tempStr = appreciate.getContext();
-                if (tempStr.length() >20) {
+                if (tempStr.length() > 20) {
                     a.setContext(tempStr.substring(0, 20).trim() + "...");
-                }else
+                } else
                     a.setContext(tempStr);
                 a.setUpTime(appreciate.getUpTime());
                 appTemp.add(a);
