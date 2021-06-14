@@ -1,6 +1,5 @@
 package jdlg.musicproject.config;
 
-import jdlg.musicproject.entries.teacher.Teacher;
 import jdlg.musicproject.interceptor.login.StudentInterceptor;
 import jdlg.musicproject.interceptor.login.TeacherInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

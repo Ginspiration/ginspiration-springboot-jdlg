@@ -1,6 +1,3 @@
-<%@ page import="java.util.List" %>
-<%@ page import="jdlg.musicproject.entries.common.Courses" %>
-<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../../pages/web-url.jsp" %>
 

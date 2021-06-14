@@ -1,6 +1,5 @@
 package jdlg.musicproject.entries.teacher;
 
-import javax.swing.*;
 import java.util.Objects;
 
 public class TeacherKnowledge {

@@ -1,10 +1,6 @@
-<%@ page import="java.util.List" %>
-<%@ page import="jdlg.musicproject.entries.common.Courses" %>
-<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../../pages/web-url.jsp" %>
-<%
-%>
+
 
 <script src="<%=basePath%>static/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="<%=basePath%>static/plugins/bootstrap/js/bootstrap.min.js"></script>

@@ -3,11 +3,13 @@ package jdlg.musicproject.controller.doStudent;
 import jdlg.musicproject.entries.common.Courses;
 import jdlg.musicproject.entries.common.QuestionBank;
 import jdlg.musicproject.entries.common.WorkExplain;
-import jdlg.musicproject.entries.student.*;
+import jdlg.musicproject.entries.student.StudentDoWork;
+import jdlg.musicproject.entries.student.StudentGrade;
+import jdlg.musicproject.entries.student.StudentPreviousWork;
+import jdlg.musicproject.entries.student.StudentQAnswer;
 import jdlg.musicproject.service.StudentService;
 import jdlg.musicproject.service.TeacherService;
 import jdlg.musicproject.util.UtilStudentWebURI;
-import jdlg.musicproject.util.UtilTeacherWebURI;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,9 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.*;
 
 @Controller

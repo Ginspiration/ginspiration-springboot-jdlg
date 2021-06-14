@@ -1,7 +1,6 @@
 package jdlg.musicproject.controller.doteacher;
 
 import jdlg.musicproject.entries.common.CoursePlus;
-import jdlg.musicproject.entries.student.Student;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

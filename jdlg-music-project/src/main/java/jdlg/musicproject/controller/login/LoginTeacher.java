@@ -1,6 +1,5 @@
 package jdlg.musicproject.controller.login;
 
-import jdlg.musicproject.entries.teacher.Teacher;
 import jdlg.musicproject.entries.teacher.TeacherNamePwd;
 import jdlg.musicproject.service.TeacherService;
 import org.springframework.stereotype.Controller;

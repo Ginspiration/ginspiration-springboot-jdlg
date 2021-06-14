@@ -1,8 +1,8 @@
 package jdlg.musicproject.service.impl;
 
 import jdlg.musicproject.dao.StudentDao;
-import jdlg.musicproject.entries.student.*;
 import jdlg.musicproject.entries.common.Courses;
+import jdlg.musicproject.entries.student.*;
 import jdlg.musicproject.service.StudentService;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,6 @@
 package jdlg.musicproject.service;
 
 import jdlg.musicproject.entries.common.News;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

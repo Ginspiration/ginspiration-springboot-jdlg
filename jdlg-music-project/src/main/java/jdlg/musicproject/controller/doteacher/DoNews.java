@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import jdlg.musicproject.entries.common.News;
 import jdlg.musicproject.entries.teacher.TeacherRegister;
-import jdlg.musicproject.entries.web.WebManage;
 import jdlg.musicproject.service.AdminService;
 import jdlg.musicproject.service.NewsService;
 import jdlg.musicproject.service.StudentService;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -26,8 +24,8 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Base64;
+import java.util.List;
 
 @Controller
 @RequestMapping("/doTeacher")

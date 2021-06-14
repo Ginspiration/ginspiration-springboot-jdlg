@@ -2,7 +2,6 @@ package jdlg.musicproject.dao;
 
 import jdlg.musicproject.entries.common.CoursePlus;
 import jdlg.musicproject.entries.student.Student;
-import jdlg.musicproject.entries.teacher.TeacherCourse;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

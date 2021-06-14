@@ -7,7 +7,6 @@ import jdlg.musicproject.service.NewsService;
 import jdlg.musicproject.service.StudentService;
 import jdlg.musicproject.service.TeacherService;
 import jdlg.musicproject.util.UtilStudentWebURI;
-import jdlg.musicproject.util.UtilTeacherWebURI;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

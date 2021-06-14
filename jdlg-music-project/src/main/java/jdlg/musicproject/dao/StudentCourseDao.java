@@ -3,7 +3,6 @@ package jdlg.musicproject.dao;
 import jdlg.musicproject.entries.common.CoursePlus;
 import org.apache.ibatis.annotations.Param;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface StudentCourseDao {

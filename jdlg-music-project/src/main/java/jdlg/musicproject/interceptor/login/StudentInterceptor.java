@@ -1,7 +1,5 @@
 package jdlg.musicproject.interceptor.login;
 
-import jdlg.musicproject.util.UtilTeacherWebURI;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 

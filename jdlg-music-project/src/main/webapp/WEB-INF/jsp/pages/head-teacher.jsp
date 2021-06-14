@@ -1,5 +1,3 @@
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Set" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
     function x() {

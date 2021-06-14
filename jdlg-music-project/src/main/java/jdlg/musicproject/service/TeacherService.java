@@ -5,8 +5,10 @@ import jdlg.musicproject.entries.common.QuestionBank;
 import jdlg.musicproject.entries.common.WorkExplain;
 import jdlg.musicproject.entries.student.Student;
 import jdlg.musicproject.entries.student.StudentCompletion;
-import jdlg.musicproject.entries.student.StudentGrade;
-import jdlg.musicproject.entries.teacher.*;
+import jdlg.musicproject.entries.teacher.Teacher;
+import jdlg.musicproject.entries.teacher.TeacherAdmin;
+import jdlg.musicproject.entries.teacher.TeacherCourse;
+import jdlg.musicproject.entries.teacher.TeacherNamePwd;
 import jdlg.musicproject.entries.web.WebManage;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,11 +1,11 @@
 package jdlg.musicproject.config;
 
-import com.github.pagehelper.PageInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.util.WebAppRootListener;
 
 @Configuration
 //@ImportResource({"classpath:dispatcherServlet.xml", "classpath:applicationContext.xml", "classpath:mybatis.xml"})

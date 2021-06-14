@@ -1,7 +1,5 @@
 package jdlg.musicproject.controller.register;
 
-import jdlg.musicproject.entries.student.Student;
-import jdlg.musicproject.entries.student.StudentAdmin;
 import jdlg.musicproject.entries.teacher.Teacher;
 import jdlg.musicproject.entries.teacher.TeacherAdmin;
 import jdlg.musicproject.entries.teacher.TeacherRegister;

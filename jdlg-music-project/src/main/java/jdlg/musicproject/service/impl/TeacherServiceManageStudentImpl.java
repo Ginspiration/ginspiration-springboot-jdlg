@@ -2,7 +2,6 @@ package jdlg.musicproject.service.impl;
 
 import jdlg.musicproject.dao.TeacherDaoManageStudent;
 import jdlg.musicproject.entries.student.Student;
-import jdlg.musicproject.entries.student.StudentNamePwd;
 import jdlg.musicproject.service.StudentService;
 import jdlg.musicproject.service.TeacherServiceManageStudent;
 import org.springframework.beans.factory.annotation.Autowired;

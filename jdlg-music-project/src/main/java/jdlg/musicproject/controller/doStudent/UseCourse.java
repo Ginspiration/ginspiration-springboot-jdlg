@@ -1,8 +1,8 @@
 package jdlg.musicproject.controller.doStudent;
 
-import jdlg.musicproject.entries.student.StudentCourse;
 import jdlg.musicproject.entries.common.Courses;
 import jdlg.musicproject.entries.common.WorkExplain;
+import jdlg.musicproject.entries.student.StudentCourse;
 import jdlg.musicproject.entries.student.StudentGrade;
 import jdlg.musicproject.service.StudentService;
 import jdlg.musicproject.service.TeacherService;

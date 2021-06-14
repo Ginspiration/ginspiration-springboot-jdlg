@@ -1,24 +1,17 @@
 package jdlg.musicproject.controller.register;
 
-import jdlg.musicproject.dao.StudentDao;
 import jdlg.musicproject.entries.student.Student;
 import jdlg.musicproject.entries.student.StudentAdmin;
-import jdlg.musicproject.entries.student.StudentNamePwd;
-import jdlg.musicproject.entries.teacher.TeacherRegister;
 import jdlg.musicproject.entries.web.WebManage;
-import jdlg.musicproject.service.AdminService;
 import jdlg.musicproject.service.StudentService;
 import jdlg.musicproject.service.TeacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/registerStudent")

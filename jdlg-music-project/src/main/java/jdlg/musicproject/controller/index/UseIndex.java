@@ -1,22 +1,16 @@
 package jdlg.musicproject.controller.index;
 
-import jdk.nashorn.internal.objects.annotations.Property;
 import jdlg.musicproject.entries.common.News;
 import jdlg.musicproject.service.NewsService;
 import jdlg.musicproject.util.UtilResourceBasePath;
-import jdlg.musicproject.util.UtilTeacherWebURI;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Properties;
 
 @Controller
 public class UseIndex {
