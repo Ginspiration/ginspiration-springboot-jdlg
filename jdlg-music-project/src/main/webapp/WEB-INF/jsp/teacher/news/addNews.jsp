@@ -202,7 +202,13 @@
         <div class="box-body">
             <div class="nav-tabs-custom">
                 <div class="tab-content">
-
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                            <a href="viewNews?nowPage=1&updatePage=0&mark=2" class="btn btn-default" style="font-size: 18px;float: right">返回新闻列表</a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="form-group">
                             <form action="" role="form" id="formNews"  method="post" enctype="multipart/form-data">
@@ -213,15 +219,15 @@
                                 <%--新闻内容输入框--%>
                                 <div class="box">
                                     <div class="box-header">
-                                        <!-- tools box -->
-                                        <div class="pull-right box-tools">
-                                            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
-                                                    title="Collapse">
-                                                <i class="fa fa-minus"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip"
-                                                    title="Remove">
-                                                <i class="fa fa-times"></i></button>
-                                        </div>
+<%--                                        <!-- tools box -->--%>
+<%--                                        <div class="pull-right box-tools">--%>
+<%--                                            <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"--%>
+<%--                                                    title="Collapse">--%>
+<%--                                                <i class="fa fa-minus"></i></button>--%>
+<%--                                            <button type="button" class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip"--%>
+<%--                                                    title="Remove">--%>
+<%--                                                <i class="fa fa-times"></i></button>--%>
+<%--                                        </div>--%>
                                         <!-- /. tools -->
                                     </div>
                                     <!-- /.box-header -->
@@ -237,7 +243,7 @@
                                 </label>
                                 <br>
                                 <br>
-                                <div class="container mt-5 mb-5" style="">
+                                <div>
                                     <input type="button" class="btn btn-success" id="toast" onclick="dosubmit()" value="提交新闻"></input>
                                 </div>
                             </form>

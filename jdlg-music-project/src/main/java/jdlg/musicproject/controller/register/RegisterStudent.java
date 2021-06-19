@@ -51,6 +51,7 @@ public class RegisterStudent {
             int res1 = studentService.regStudent(studentAdmin);
             if ((res + res1) == 2) {
                 request.setAttribute("sName", sRegName);
+                request.setAttribute("sId",sRegNumber);
                 mv.setViewName("skip/register-complete");
             } else
                 mv.setViewName("admin/admin-register-serror");

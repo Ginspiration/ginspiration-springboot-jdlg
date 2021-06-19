@@ -36,7 +36,7 @@
                 <!-- /.col -->
             </div>
         </form>
-        <a href="all-admin-register.html" class="text-center">新用户注册</a>
+        <a href="<%=basePath%>registerTeacher/regTeacher" class="text-center">新用户注册</a>
 
     </div>
     <!-- /.login-box-body -->

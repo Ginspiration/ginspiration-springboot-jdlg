@@ -37,8 +37,10 @@ public class DoTeacher {
             tName = new String(Base64.getDecoder().decode(tNameBase64.replace(" ", "+")), "utf-8");
             String tIdString = new String(Base64.getDecoder().decode(tIdBase64.replace(" ", "+")), "utf-8");
             tId = Integer.parseInt(tIdString);
-            session.setAttribute("tName", tName);
-            session.setAttribute("tId", tId);
+            if (session.getAttribute("tName") == null || session.getAttribute("tId") == null) {
+                session.setAttribute("tName", tName);
+                session.setAttribute("tId", tId);
+            }
         }
 //        else {
 //            tName = (String) session.getAttribute("sName");

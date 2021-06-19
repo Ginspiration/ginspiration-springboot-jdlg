@@ -56,12 +56,14 @@
             var uAnswer = userAnswer[i].substring(0, 1)
             answers.push({questionId: qId[i], studentId:${sessionScope.sId}, stuAnswer: uAnswer})
         })
-        console.log(answers)
+        //console.log(answers)
         $.ajax({
             url: "storageAnswer",
             data: JSON.stringify(answers),
             type: "post",
-            contentType: "application/json"
+            contentType: "application/json",
+            success:function () {
+            }
         })
         $(location).attr('href', '<%=basePath%>doStudent/showGrade?rCount=' + rightCount);
     }

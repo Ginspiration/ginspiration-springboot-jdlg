@@ -9,7 +9,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Base64;
 
 @Controller
 @RequestMapping("/loginTeacher")
@@ -45,13 +48,23 @@ public class LoginTeacher {
 
     /*转发到教师index*/
     @RequestMapping("/state")
-    public ModelAndView userStudent(HttpSession session, HttpServletRequest request) {
+    public ModelAndView userStudent(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         ModelAndView mv = new ModelAndView();
         String tName = request.getParameter("tName");
-        if (tName != null) {
+        Integer tId = Integer.valueOf(request.getParameter("tId"));
+        if (tId != null && tName != null) {
             session.setAttribute("tName", tName);
+            session.setAttribute("tId", tId);
+            String tNameBase = Base64.getEncoder().encodeToString(tName.getBytes());
+            String tIdBase = Base64.getEncoder().encodeToString(String.valueOf(tId).getBytes());
+            //response.sendRedirect("/doTeacher/indexTeacher?tName="+tNameBase+"&tId="+tIdBase);
+            String basePath = request.getScheme() + "://" +
+                    request.getServerName() + ":" + request.getServerPort() +
+                    request.getContextPath() + "/";
+            //mv.setViewName("redirect:"+basePath+"registerTeacher/regTeacher");
+            mv.setViewName("redirect:"+basePath+"doTeacher/indexTeacher?tName="+tNameBase+"&tId="+tIdBase);
         }
-        mv.setViewName("index/index-teacher");
+        //mv.setViewName("index/index-teacher");
         return mv;
     }
 

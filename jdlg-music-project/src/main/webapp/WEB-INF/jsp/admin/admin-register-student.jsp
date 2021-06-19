@@ -38,14 +38,14 @@
                 <input type="password" class="form-control" placeholder="确认密码" name="sRegPwd2">
                 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
             </div>
-            <div class="row">
+            <div class="row"><%--
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
                             <input type="checkbox"> 我同意 <a href="#">协议</a>
                         </label>
                     </div>
-                </div>
+                </div>--%>
                 <!-- /.col -->
                 <div class="col-xs-4">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">注册</button>
@@ -53,7 +53,7 @@
                 <!-- /.col -->
             </div>
         </form>
-        <a href="all-admin-login.html" class="text-center">我有账号，现在就去登录</a>
+        <a href="<%=basePath%>loginStudent/student" class="text-center">我有账号，现在就去登录</a>
     </div>
     <!-- /.form-box -->
 </div>

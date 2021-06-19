@@ -5,6 +5,12 @@
 <!--工作空间，定位到dao的接口-->
 <mapper namespace="jdlg.musicproject.dao.AdminDao">
     <select id="selectAdminPermit" resultType="jdlg.musicproject.entries.teacher.TeacherRegister">
-        select * from admin_tch_register
+        select * from admin
     </select>
+    <select id="selectTeacherRegisterCode" resultType="java.lang.String">
+        select invitation_code from teacher_register
+    </select>
+    <insert id="insertTeacherRegisterCode">
+        insert into teacher_register(invitation_code) values (#{code})
+    </insert>
 </mapper>

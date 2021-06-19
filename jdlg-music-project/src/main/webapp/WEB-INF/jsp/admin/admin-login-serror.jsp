@@ -33,9 +33,7 @@
             </div>
         </form>
         <!-- /.social-auth-links -->
-
-        <a href="#">忘记密码</a><br>
-        <a href="all-admin-register.html" class="text-center">新用户注册</a>
+        <a href="<%=basePath%>registerStudent/regStudent" class="text-center">新用户注册</a>
 
     </div>
     <!-- /.login-box-body -->

@@ -44,18 +44,15 @@ public class DoNews {
      *
      * @return
      */
-//    @GetMapping("/showAddNews")
-//    public ModelAndView showAddNews(HttpServletRequest request, HttpSession session){
-//        ModelAndView mv = new ModelAndView();
-//        request.setAttribute("Context", UtilTeacherWebURI.teacherAddNewUri.getUri());
-//        mv.setViewName("index/index-teacher");
-//        return mv;
-//    }
-
     /*跳转管理员权限*/
     @GetMapping("/showAddNews")
-    public ModelAndView studentManagePermitIndex() {
+    public ModelAndView studentManagePermitIndex(HttpSession session, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
+        if (session.getAttribute("adminPower") != null && session.getAttribute("adminPower").equals(true)) {
+            request.setAttribute("Context", UtilTeacherWebURI.teacherAddNewUri.getUri());
+            mv.setViewName("index/index-teacher");
+            return mv;
+        }
         mv.setViewName("teacher/news/admin-power");
         return mv;
     }
@@ -70,7 +67,8 @@ public class DoNews {
         if (name != null && password != null) {
             TeacherRegister register = adminService.registerPermit();
             if (register.getAdmin_Name().equals(name) && register.getPassword().equals(password)) {
-                request.setAttribute("Context", UtilTeacherWebURI.teacherAddNewUri.getUri());
+                session.setAttribute("adminPower", true);
+                request.setAttribute("Context", UtilTeacherWebURI.teacherViewNews.getUri());
                 mv.setViewName("index/index-teacher");
                 return mv;
             } else
@@ -188,7 +186,6 @@ public class DoNews {
         News news = new News();
         news.setNewContext(context);
         //存储标题前，需先查找是否有重复标题
-        //List<News> getTitleList = newsService.selectAllNews();
         List<News> getTitleList = null;
         synchronized (session.getAttribute("synNews")) {
             getTitleList = newsService.selectAllNews();
@@ -283,7 +280,12 @@ public class DoNews {
         session.setAttribute("mark", mark);
 
         ModelAndView mv = new ModelAndView();
-        request.setAttribute("Context", UtilTeacherWebURI.teacherViewNews.getUri());
+
+        if (request.getAttribute("notAdmin") != null && request.getAttribute("notAdmin").equals(true)) {
+            request.setAttribute("Context", UtilTeacherWebURI.newsTeacherIndex.getUri());
+        } else
+            request.setAttribute("Context", UtilTeacherWebURI.teacherViewNews.getUri());
+
         mv.setViewName("index/index-teacher");
         return mv;
     }
@@ -622,7 +624,7 @@ public class DoNews {
 
         //需先确定radio类型
         if (radio == 1) {  // 1.添加图片
-            url = news1.getNewImgUrl() +"&*&"+ url;
+            url = news1.getNewImgUrl() + "&*&" + url;
         } else if (radio == 2) {   //删除图片
 
             //先删除原来的图片
@@ -668,5 +670,50 @@ public class DoNews {
             newsService.updateNew(news, oldTitle);
         }
         return 1000;
+    }
+    /*--------------------------------------------*/
+    @RequestMapping("teacherNewsIndex")
+    public ModelAndView teacherNewsIndexAll(HttpServletRequest request) {
+        //"viewNews?nowPage=${nowPage}&updatePage=1&mark=${mark}"
+        String nowPage = request.getParameter("nowPage");
+        String updatePage = request.getParameter("updatePage");
+        String mark = request.getParameter("mark");
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("notAdmin", true);
+        mv.setViewName("forward:viewNews?nowPage=" + nowPage + "&updatePage=" + updatePage + "&mark=" + mark);
+        return mv;
+    }
+    @GetMapping("selectNewPlus")
+    public ModelAndView selectNewPlus(HttpServletRequest req, HttpSession session) {
+
+        String title = req.getParameter("title");
+        //System.out.println(title);
+        List<News> newsList = null;
+        synchronized (session.getAttribute("synNews")) {
+            newsList = newsService.selectNewByTitle(title);
+        }
+        //System.out.println(newsList);
+
+        session.removeAttribute("mark");
+        session.setAttribute("mark", 3);
+
+        session.removeAttribute("news");
+        session.setAttribute("news", newsList);
+
+        ModelAndView mv = new ModelAndView();
+        req.setAttribute("Context", UtilTeacherWebURI.newsTeacherIndex.getUri());
+        mv.setViewName("index/index-teacher");
+        return mv;
+    }
+    @GetMapping("/NewsJudgeAdmin")
+    public ModelAndView NewsJudgeAdmin(HttpSession session, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView();
+        if (session.getAttribute("adminPower") != null && session.getAttribute("adminPower").equals(true)) {
+            //request.setAttribute("Context", UtilTeacherWebURI.teacherAddNewUri.getUri());
+            mv.setViewName("forward:viewNews?nowPage=1&updatePage=0&mark=2");
+            return mv;
+        }
+        mv.setViewName("teacher/news/admin-power");
+        return mv;
     }
 }

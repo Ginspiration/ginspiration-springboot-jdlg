@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/registerTeacher")
@@ -32,8 +33,8 @@ public class RegisterTeacher {
         return mv;
     }
 
-    /*教师注册获取管理员权限*/
-    @RequestMapping(value = "/regTeacherPermit", method = RequestMethod.POST)
+    /*教师注册获取管理员权限regTeacherPermit*/
+/*    @RequestMapping(value = "/regTeacherPermit", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView userRegisterTeacherPermit(@RequestParam("adminName") String name,
                                                   @RequestParam("adminPassword") String password) {
@@ -43,6 +44,20 @@ public class RegisterTeacher {
             mv.setViewName("admin/admin-register-teacher");
         } else
             mv.setViewName("admin/admin-register-teacher-perror");
+        return mv;
+    }*/
+    @RequestMapping(value = "/regTeacherPermit", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView userRegisterTeacherPermit(@RequestParam("adminName") String name) {
+        ModelAndView mv = new ModelAndView();
+        List<String> codes = adminService.queryTeacherRegisterCode();
+        for (String code : codes) {
+            if (code.equals(name)) {
+                mv.setViewName("admin/admin-register-teacher");
+                return mv;
+            }
+        }
+        mv.setViewName("admin/admin-register-teacher-perror");
         return mv;
     }
 
@@ -64,6 +79,7 @@ public class RegisterTeacher {
             int res1 = teacherService.addTchPwdName(teacherAdmin);
             if ((res + res1) == 2) {
                 request.setAttribute("tName", sRegName);
+                request.setAttribute("tId", sRegNumber);
                 mv.setViewName("skip/register-complete");
             } else
                 mv.setViewName("admin/admin-register-terror");

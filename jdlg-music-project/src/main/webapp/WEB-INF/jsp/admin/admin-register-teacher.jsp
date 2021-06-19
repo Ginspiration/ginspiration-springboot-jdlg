@@ -17,7 +17,7 @@
     </div>
 
     <div class="register-box-body">
-        <p class="login-box-msg">注册</p>
+        <p class="login-box-msg">验证成功，请注册</p>
         <form action="regMessage" method="post">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" placeholder="姓名" name="sRegName">
@@ -35,14 +35,14 @@
                 <input type="password" class="form-control" placeholder="确认密码" name="sRegPwd2">
                 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
             </div>
-            <div class="row">
+            <div class="row"><%--
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
                             <input type="checkbox"> 我同意 <a href="#">协议</a>
                         </label>
                     </div>
-                </div>
+                </div>--%>
                 <!-- /.col -->
                 <div class="col-xs-4">
                     <button type="submit" class="btn btn-primary btn-block btn-flat" id="sub">注册</button>
@@ -52,7 +52,7 @@
         </form>
 
 
-        <a href="loginAdmin/loginTeacher" class="text-center">我有账号，现在就去登录</a>
+        <a href="<%=basePath%>loginTeacher/Teacher" class="text-center">我有账号，现在就去登录</a>
     </div>
     <!-- /.form-box -->
 </div>

@@ -12,82 +12,57 @@
             <!-- 菜单 -->
             <%--删除新闻 修改新闻 添加新闻 推荐新闻 查找新闻--%>
             <li class="treeview">
-                <a href="">
-                    <i class="fa fa-folder"></i> <span>新闻管理</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+                <a href="teacherNewsIndex?nowPage=1&updatePage=0&mark=2">
+                    <i class="fa fa-folder"></i> <span>网站新闻</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li>
-                        <a href="viewNews?nowPage=1&updatePage=0&mark=2">
-                            <i class="fa fa-circle-o"></i> 新闻列表
-                        </a>
-                    </li>
-                    <li>
-                        <a href="showAddNews">
-                            <i class="fa fa-circle-o"></i> 添加新闻
-                        </a>
-                    </li>
-                </ul>
             </li>
             <%--新闻管理--%>
             <%--学员管理--%>
-            <li class="treeview">
-                <a href="">
-                    <i class="fa fa-folder"></i> <span>学生管理</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li>
-                        <a href="studentManagePermitIndex">
-                            <i class="fa fa-circle-o"></i> 管理员
-                        </a>
-                    </li>
-                </ul>
-            </li>
+<%--            <li class="treeview">--%>
+<%--                <a href="">--%>
+<%--                    <i class="fa fa-folder"></i> <span>学生管理</span>--%>
+<%--                    <span class="pull-right-container">--%>
+<%--                        <i class="fa fa-angle-left pull-right"></i>--%>
+<%--                    </span>--%>
+<%--                </a>--%>
+<%--                <ul class="treeview-menu">--%>
+<%--                    <li>--%>
+<%--                        <a href="studentManagePermitIndex">--%>
+<%--                            <i class="fa fa-circle-o"></i> 管理员--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
+<%--                </ul>--%>
+<%--            </li>--%>
             <%--学员管理--%>
             <%--课程管理--%>
             <li class="treeview">
-                <a href="">
-                    <i class="fa fa-folder"></i> <span>课程管理</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+                <a href="indexCourse">
+                    <i class="fa fa-folder"></i> <span>我的课程</span>
+<%--                    <span class="pull-right-container">--%>
+<%--                        <i class="fa fa-angle-left pull-right"></i>--%>
+<%--                    </span>--%>
                 </a>
                 <%--添加课程 删除课程 修改课程 搜索课程 推荐课程--%>
-                <ul class="treeview-menu">
-                    <li>
-                        <a href="indexCourse">
-                            <i class="fa fa-circle-o"></i> 课程主页
-                        </a>
-                    </li>
-                </ul>
+<%--                <ul class="treeview-menu">--%>
+<%--                    <li>--%>
+<%--                        <a href="indexCourse">--%>
+<%--                            <i class="fa fa-circle-o"></i> 课程主页--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
+<%--                </ul>--%>
             </li>
             <%--课程管理--%>
             <%--论坛问答--%>
             <li class="treeview">
-                <a href="">
+                <a href="indexForum">
                     <i class="fa fa-folder"></i> <span>论坛问答</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
                 </a>
-                <ul class="treeview-menu">
-                    <li>
-                        <a href="indexForum">
-                            <i class="fa fa-circle-o"></i> 进入论坛
-                        </a>
-                    </li>
-                </ul>
             </li>
             <%--论坛问答--%>
             <%--学生自学多媒体--%>
             <li class="treeview">
                 <a href="">
-                    <i class="fa fa-folder"></i> <span>学生自学多媒体</span>
+                    <i class="fa fa-folder"></i> <span>我的多媒体</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -130,22 +105,51 @@
             </li>
             <%--学生考核--%>
             <%--全局设置--%>
+<%--            <li class="treeview">--%>
+<%--                <a href="">--%>
+<%--                    <i class="fa fa-folder"></i> <span>全局设置</span>--%>
+<%--                    <span class="pull-right-container">--%>
+<%--                        <i class="fa fa-angle-left pull-right"></i>--%>
+<%--                    </span>--%>
+<%--                </a>--%>
+<%--                <ul class="treeview-menu">--%>
+<%--                    <li>--%>
+<%--                        <a href="webSettingPermitIndex">--%>
+<%--                            <i class="fa fa-circle-o"></i> 管理员--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
+<%--                </ul>--%>
+<%--            </li>--%>
+            <%--全局设置--%>
+            <%--管理员--%>
             <li class="treeview">
                 <a href="">
-                    <i class="fa fa-folder"></i> <span>全局设置</span>
+                    <i class="fa fa-folder"></i> <span>管理员</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
                     <li>
+                        <a href="studentManagePermitIndex">
+                            <i class="fa fa-circle-o"></i> 学生管理
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="NewsJudgeAdmin">
+                            <i class="fa fa-circle-o"></i> 新闻管理
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="webSettingPermitIndex">
-                            <i class="fa fa-circle-o"></i> 管理员
+                            <i class="fa fa-circle-o"></i> 全局设置
                         </a>
                     </li>
                 </ul>
             </li>
-            <%--全局设置--%>
+            <%--管理员--%>
         </ul>
     </section>
     <!-- /.sidebar -->

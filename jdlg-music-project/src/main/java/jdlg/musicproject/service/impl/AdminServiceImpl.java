@@ -6,6 +6,7 @@ import jdlg.musicproject.service.AdminService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -15,5 +16,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public TeacherRegister registerPermit() {
         return adminDao.selectAdminPermit();
+    }
+
+    @Override
+    public List<String> queryTeacherRegisterCode() {
+        return adminDao.selectTeacherRegisterCode();
+    }
+
+    @Override
+    public int addTeacherRegisterCode(String code) {
+        return adminDao.insertTeacherRegisterCode(code);
     }
 }

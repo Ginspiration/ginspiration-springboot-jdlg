@@ -9,21 +9,19 @@
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
-        <a><b>管理员权限</b></a>
+        <a><b>教师注册权限</b></a>
     </div>
-
     <div class="register-box-body">
-        <p class="login-box-msg">管理员名或密码错误！请重试</p>
-
+        <p class="login-box-msg">邀请码错误，请重试</p>
         <form action="regTeacherPermit" method="post" id="form1">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="输入管理员名" name="adminName">
+                <input type="text" class="form-control" placeholder="邀请码" name="adminName">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
-            <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="输入管理员密码" name="adminPassword">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
+            <%--            <div class="form-group has-feedback">--%>
+            <%--                <input type="password" class="form-control" placeholder="输入管理员密码" name="adminPassword">--%>
+            <%--                <span class="glyphicon glyphicon-lock form-control-feedback"></span>--%>
+            <%--            </div>--%>
             <div class="row">
                 <!-- /.col -->
                 <div class="col-xs-4">
@@ -33,7 +31,7 @@
             </div>
         </form>
 
-        <a href="loginAdmin/login" class="text-center">我有账号，现在就去登录</a>
+        <a href="<%=basePath%>loginTeacher/Teacher" class="text-center">我有账号，现在就去登录</a>
     </div>
     <!-- /.form-box -->
 </div>

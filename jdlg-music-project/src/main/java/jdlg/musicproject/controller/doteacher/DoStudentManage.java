@@ -6,6 +6,7 @@ import jdlg.musicproject.entries.student.Student;
 import jdlg.musicproject.entries.student.StudentAdmin;
 import jdlg.musicproject.entries.student.StudentNamePwd;
 import jdlg.musicproject.entries.teacher.TeacherRegister;
+import jdlg.musicproject.entries.web.WebManage;
 import jdlg.musicproject.service.AdminService;
 import jdlg.musicproject.service.StudentService;
 import jdlg.musicproject.service.TeacherService;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -35,8 +37,13 @@ public class DoStudentManage {
 
     /*跳转管理员权限*/
     @GetMapping("/studentManagePermitIndex")
-    public ModelAndView studentManagePermitIndex() {
+    public ModelAndView studentManagePermitIndex(HttpServletRequest request,HttpSession session) {
         ModelAndView mv = new ModelAndView();
+        if (session.getAttribute("adminPower") != null && session.getAttribute("adminPower").equals(true)) {
+            request.setAttribute("Context", UtilTeacherWebURI.studentManage.getUri());
+            mv.setViewName("index/index-teacher");
+            return mv;
+        }
         mv.setViewName("teacher/stu/admin-power");
         return mv;
     }
@@ -45,11 +52,13 @@ public class DoStudentManage {
     @RequestMapping(value = "/studentManagePermit", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView userRegisterTeacherPermit(@RequestParam("adminName") String name,
-                                                  @RequestParam("adminPassword") String password,HttpServletRequest request) {
+                                                  @RequestParam("adminPassword") String password, HttpServletRequest request, HttpSession session) {
         ModelAndView mv = new ModelAndView();
+
         if (name != null && password != null) {
             TeacherRegister register = adminService.registerPermit();
             if (register.getAdmin_Name().equals(name) && register.getPassword().equals(password)) {
+                session.setAttribute("adminPower",true);
                 request.setAttribute("Context", UtilTeacherWebURI.studentManage.getUri());
                 mv.setViewName("index/index-teacher");
                 return mv;

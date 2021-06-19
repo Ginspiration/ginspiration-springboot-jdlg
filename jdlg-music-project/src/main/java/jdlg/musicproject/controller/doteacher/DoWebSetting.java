@@ -4,6 +4,7 @@ import jdlg.musicproject.entries.teacher.TeacherRegister;
 import jdlg.musicproject.entries.web.WebManage;
 import jdlg.musicproject.service.AdminService;
 import jdlg.musicproject.service.TeacherService;
+import jdlg.musicproject.util.UtilTeacherWebURI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,16 @@ public class DoWebSetting {
 
     /*跳转管理员权限*/
     @GetMapping("/webSettingPermitIndex")
-    public ModelAndView studentManagePermitIndex() {
+    public ModelAndView studentManagePermitIndex(HttpSession session,HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
+        if (session.getAttribute("adminPower") != null && session.getAttribute("adminPower").equals(true)) {
+            WebManage message = teacherService.showWebMessage();
+            session.setAttribute("webUsed", message.getWebUsed());
+            session.setAttribute("webRegister", message.getRegistered());
+            request.setAttribute("Context", "../teacher/webSetting/admin-web.jsp");
+            mv.setViewName("index/index-teacher");
+            return mv;
+        }
         mv.setViewName("teacher/webSetting/admin-power");
         return mv;
     }
@@ -42,6 +51,7 @@ public class DoWebSetting {
         if (name != null && password != null) {
             TeacherRegister register = adminService.registerPermit();
             if (register.getAdmin_Name().equals(name) && register.getPassword().equals(password)) {
+                session.setAttribute("adminPower",true);
                 WebManage message = teacherService.showWebMessage();
                 session.setAttribute("webUsed", message.getWebUsed());
                 session.setAttribute("webRegister", message.getRegistered());

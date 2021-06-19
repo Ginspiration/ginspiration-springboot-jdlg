@@ -25,7 +25,7 @@
             ${totalPage}
 
             if (nowPage < totalPages) {
-                window.location.href = "viewNews?nowPage=${nowPage}&updatePage=1&mark=${mark}"
+                window.location.href = "teacherNewsIndex?nowPage=${nowPage}&updatePage=1&mark=${mark}"
             } else
                 AstNotif.notify('已是最后一页！');
 
@@ -38,7 +38,7 @@
             ${totalPage}
 
             if (nowPage > 1) {
-                window.location.href = "viewNews?nowPage=${nowPage}&updatePage=-1&mark=${mark}"
+                window.location.href = "teacherNewsIndex?nowPage=${nowPage}&updatePage=-1&mark=${mark}"
             } else
                 AstNotif.notify('已是第一页！');
         })
@@ -61,13 +61,13 @@
             <div class="tab-content">
                 <div class="active tab-pane" id="activity">
                     <div style="float:right;font-size:25px ">*为推荐新闻</div>
-                    <label>
-                        <div class="flash">
-                            <a href="showAddNews" class="btn btn-success"
-                               style="font-size: 18px; "><i class="fa fa-fw fa-plus"></i>添加新闻</a>
-                        </div>
-                    </label>
-                    <br/>
+<%--                    <label>--%>
+<%--                        <div class="flash">--%>
+<%--                            <a href="showAddNews" class="btn btn-success"--%>
+<%--                               style="font-size: 18px; "><i class="fa fa-fw fa-plus"></i>添加新闻</a>--%>
+<%--                        </div>--%>
+<%--                    </label>--%>
+<%--                    <br/>--%>
                     <label style="color: #0d6aad;"><h4>新闻列表</h4></label>
 
                     <%-- <select size="20" style="width:200px;font-size:12px" multiple>--%>
@@ -80,23 +80,23 @@
                             <c:choose>
                                 <%--查询新闻后将此处改为返回按钮--%>
                                 <c:when test="${mark == 3}">
-                                    <a href="viewNews?nowPage=1&updatePage=0&mark=2" class="btn btn-default">返回</a>
+                                    <a href="teacherNewsIndex?nowPage=1&updatePage=0&mark=2" class="btn btn-default">返回</a>
                                 </c:when>
                                 <c:otherwise>
                                     <ul class="nav nav-tabs">
                                         <li role="presentation" id="nav1"><a
-                                                href="viewNews?nowPage=1&updatePage=0&mark=2">所有</a></li>
+                                                href="teacherNewsIndex?nowPage=1&updatePage=0&mark=2">所有</a></li>
                                         <li role="presentation" id="nav2"><a
-                                                href="viewNews?nowPage=1&updatePage=0&mark=1">推荐</a></li>
+                                                href="teacherNewsIndex?nowPage=1&updatePage=0&mark=1">推荐</a></li>
                                         <li role="presentation" id="nav3"><a
-                                                href="viewNews?nowPage=1&updatePage=0&mark=0">其他</a></li>
+                                                href="teacherNewsIndex?nowPage=1&updatePage=0&mark=0">其他</a></li>
                                     </ul>
                                 </c:otherwise>
                             </c:choose>
                         </div>
                         <%--标题搜索功能--%>
                         <div class="col-xs-offset-6">
-                            <form action="selectNew" method="get" class="navbar-form navbar-left">
+                            <form action="selectNewPlus" method="get" class="navbar-form navbar-left">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="标题搜索" name="title" id="title">
                                 </div>
@@ -115,12 +115,12 @@
                             <div style="float: left;margin-right: 10px">&nbsp;<c:if
                                     test="${news.newMark == 1}">*</c:if></div>
                             <button class="btn btn-link" onclick="convert${status.count}()">${news.newTitle} </button>
-                            <button id="delete" onclick="deleteNew${status.count}()" class="btn btn-warning"
+<%--                            <button id="delete" onclick="deleteNew${status.count}()" class="btn btn-warning"
                                     style="float: right;margin-left: 10px;">删除
                             </button>
                             <button onclick="updateConvert${status.count}()" class="btn btn-default"
                                     style="float: right">修改
-                            </button>
+                            </button>--%>
                             <script>
                                 //删除新闻
                                 function deleteNew${status.count}() {
@@ -176,7 +176,7 @@
                 <c:if test="${mark != 3}">  <%--若搜索新闻则不显示--%>
                     <ul class="pagination pagination-sm inline" id="publishedPages">
                         <li id='totalPages'><a>共${totalPage}页</a></li>
-                        <li><a href="viewNews?nowPage=1&updatePage=0&mark=${mark}">首页</a></li>
+                        <li><a href="teacherNewsIndex?nowPage=1&updatePage=0&mark=${mark}">首页</a></li>
                         <li><a>第</a></li>
                         <li><a id="upPage">&laquo;</a></li>
                             <%--左箭头--%>
@@ -184,7 +184,7 @@
                         <li><a id="downPage">&raquo;</a></li>
                             <%--右箭头--%>
                         <li><a>页</a></li>
-                        <li><a href="viewNews?nowPage=${totalPage}&updatePage=0&mark=${mark}">尾页</a></li>
+                        <li><a href="teacherNewsIndex?nowPage=${totalPage}&updatePage=0&mark=${mark}">尾页</a></li>
                     </ul>
                 </c:if>
 

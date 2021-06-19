@@ -16,12 +16,14 @@
         String user = null;
         String sName = (String) request.getAttribute("sName");
         String tName = (String) request.getAttribute("tName");
+        Integer sId = (Integer)request.getAttribute("sId");
+        Integer tId = (Integer)request.getAttribute("tId");
         if (sName != null) {
             user = "学生";
-            message = "loginStudent/state?sName=" + sName;
+            message = "loginStudent/state?sName=" + sName+"&sId="+sId;
         } else if (tName != null) {
             user = "教师";
-            message = "loginTeacher/state?tName=" + tName;
+            message = "loginTeacher/state?tName=" + tName+"&tId="+tId;
         } else
             response.sendRedirect(basePath);
     %>

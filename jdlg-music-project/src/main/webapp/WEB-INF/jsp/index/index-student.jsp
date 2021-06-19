@@ -24,7 +24,8 @@
     <%@include file="../pages/link.jsp" %>
 </head>
 
-<body class="hold-transition skin-black layout-boxed sidebar-mini">
+<%--<body class="hold-transition skin-black layout-boxed sidebar-mini">--%>
+<body class="hold-transition skin-black sidebar-mini">
 
 <div class="wrapper">
 

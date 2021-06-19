@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Base64;
 
 @Controller
 @RequestMapping("/loginStudent")
@@ -65,10 +66,18 @@ public class LoginStudent {
     public ModelAndView userStudent(HttpServletRequest request, HttpSession session) {
         ModelAndView mv = new ModelAndView();
         String stuName = request.getParameter("sName");
+        Integer stuId = Integer.valueOf(request.getParameter("sId"));
         if (stuName != null) {
             session.setAttribute("sName", stuName);
-        }
-        mv.setViewName("index/index-student");
+            session.setAttribute("sId",stuId);
+            String sNameBase = Base64.getEncoder().encodeToString(stuName.getBytes());
+            String sIdBase = Base64.getEncoder().encodeToString(String.valueOf(stuId).getBytes());
+            String basePath = request.getScheme() + "://" +
+                    request.getServerName() + ":" + request.getServerPort() +
+                    request.getContextPath() + "/";
+            mv.setViewName("redirect:"+basePath+"doStudent/indexStudent?tsName="+sNameBase+"&sId="+sIdBase);
+        }else
+            return null;
         return mv;
     }
 
